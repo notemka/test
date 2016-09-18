@@ -1,0 +1,58 @@
+.header {
+  margin-bottom: 20px;
+}
+
+.logo {
+  display: inline-block;
+  width: 15%;
+  min-width: 100px;
+  height: 100px;
+  overflow: hidden;
+  vertical-align: middle;
+
+  @media only screen and (max-width: $xsmall) {
+    height: 65px;
+  }
+}
+
+.logo-wrap {
+  display: block;
+  height: 100%;
+  text-align: center;
+}
+
+.logo-img {
+  width: 30px;
+  margin: 15px 0 10px;
+  transform: rotate(30deg);
+
+  @media only screen and (max-width: $xsmall) {
+    margin: 0;
+  }
+}
+
+.logo-text {
+  color: $primaryColor;
+  font-weight: bold;
+}
+
+.navigation-trigger {
+  float: right;
+  display: none;
+  margin: 15px;
+
+  @media only screen and (max-width: $xsmall) {
+    display: block;
+    margin: 20px;
+  }
+}
+
+.navigation-trigger-link {
+  float: right;
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: svg-load("menu.svg") center center no-repeat;
+  background-size: 100%;
+  text-indent: -9999px;
+}

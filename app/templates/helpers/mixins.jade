@@ -1,0 +1,7 @@
+mixin tabs(items)
+  each item, i in items
+    li.tabs-item
+      if i === pageId
+        a.tabs-link.active(href=item.href) #{item.name}
+      else
+        a.tabs-link(href=item.href) #{item.name}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Test for FS">
+    <meta name="keywords" content="">
+    <meta name="author" content="emmaKhayrullina">
+    <link rel="stylesheet" href="css/bundle.css">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  </head>
+
+  <body>
+    <!--[if lt IE 7]>
+<p class="browsehappy">Вы используете <strong>устаревший</strong> браузер. Пожалуйста <a href="http://browsehappy.com/">обновите</a> его.</p>
+<![endif]-->
+    <header class="header">
+      <div class="logo">
+        <a href="/" class="logo-wrap"><img src="img/paperplane.svg" class="logo-img">
+          <div class="logo-text">Paperplane</div>
+        </a>
+      </div>
+      <div class="navigation-trigger"><a href="#" class="navigation-trigger-link">Menu</a></div>
+    </header>
+    <div class="container">
+      <div class="tabs-container">
+        <ul class="tabs clearfix">
+          <li class="tabs-item"><a href="/" class="tabs-link">Inbox</a></li>
+          <li class="tabs-item"><a href="/draft.html" class="tabs-link">Draft</a></li>
+          <li class="tabs-item"><a href="/starred.html" class="tabs-link">Starred</a></li>
+          <li class="tabs-item"><a href="/deleted.html" class="tabs-link">Deleted</a></li>
+        </ul>
+        <div class="tabs-content">
+          <div class="actions"><label for="main_checkbox" class="action-checkbox-label"> <input id="main_checkbox" type="checkbox" value="Select all" title="Select all" class="action-checkbox"><span>Select all messages</span></label>
+            <div class="action-buttons"><a id="button_new" href="/new.html" class="action-button">New</a><a id="button_star" href="#" class="action-button">Star</a><a id="button_delete" href="#" class="action-button">Delete</a></div>
+          </div>
+          <ul class="message-list draft"></ul>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="footer-inner"></div>
+    </footer>
+    <!-- vendor.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- bundle.js-->
+    <script src="js/bundle.js"></script>
+  </body>
+
+</html>

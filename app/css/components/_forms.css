@@ -1,0 +1,119 @@
+.action-buttons {
+  display: inline-block;
+  border-radius: 3px;
+
+  @media only screen and (max-width: $small) {
+    display: block;
+  }
+}
+
+.new-msg-button,
+.action-button {
+  display: inline-block;
+  padding: 5px 30px;
+  border: 1px solid transparent;
+  border-right-color: #ebebeb;
+  background: $primaryColor;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.6s;
+  color: $lightFont;
+  font-weight: 600;
+
+  &:hover,
+  &.active {
+    background: $secondaryColor;
+  }
+
+  &:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  &:last-child {
+    border-right-color: transparent;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  @media only screen and (max-width: $medium) {
+    padding: 2px 15px;
+  }
+
+  @media only screen and (max-width: $small) {
+    width: 100%;
+    padding: 5px 0;
+    border-right-color: transparent;
+    border-bottom-color: $lightFont;
+    border-radius: 0;
+
+    &:first-child,
+    &:last-child {
+      border-radius: 0;
+    }
+  }
+}
+
+.action-checkbox {
+  display: inline-block;
+  margin: 5px 17px;
+  font-size: 20px;
+  vertical-align: middle;
+
+  @media only screen and (max-width: $medium) {
+    margin: 8px 15px 8px 0;
+  }
+
+  @media only screen and (max-width: $small) {
+    margin-right: 5px;
+  }
+}
+
+.action-checkbox-label {
+  display: inline-block;
+
+  span {
+    display: none;
+
+    @media only screen and (max-width: $small) {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  @media only screen and (max-width: $small) {
+    margin-bottom: 15px;
+  }
+}
+
+.new-msg-form {
+  width: 450px;
+}
+
+.form-inputs {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.new-msg-title,
+.new-msg-text {
+  display: inline-block;
+  width: 100%;
+  border: 1px solid $border;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.new-msg-title {
+  padding: 5px 10px;
+}
+
+.new-msg-text {
+  height: 150px;
+  padding: 10px;
+  resize: none;
+}
+
+.new-msg-button {
+  border-radius: 3px;
+}

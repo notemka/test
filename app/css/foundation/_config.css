@@ -1,0 +1,33 @@
+/******  Используемые перменные и шрифты  ******/
+
+/* ----------  @font-face ----------- */
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700&subset=cyrillic");
+
+/* ------------- Colors ------------- */
+$primaryColor: #facf28;
+$secondaryColor: #8dcc2a;
+
+$bgColor: #fff;
+$tabColor: #f7f7f7;
+$starColor: #f9e10b;
+
+/* ------------- Base ------------- */
+
+/* ----- Typography ----- */
+$font: "Open Sans", sans-serif;
+$fontSize: 16px;
+$fontColor: #303030;
+$secondaryfontColor: #777;
+$lightFont: $bgColor;
+
+/* ----- Borders & Box Shadow ----- */
+$border: #ebebeb;
+
+/* ----- Screen breakpoints ----- */
+$small: 320px;
+$xsmall: 480px;
+$medium: 768px;
+$xmedium: 1024px;
+$large: 1224px;
+$xlarge: 1320px;

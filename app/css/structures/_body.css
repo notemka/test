@@ -1,0 +1,6 @@
+/* ------------ Blocks ----------- */
+
+/* подключение стилей для секций */
+@import "../components/tabs";
+@import "../components/messages";
+@import "../components/forms";

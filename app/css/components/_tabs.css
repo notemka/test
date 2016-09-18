@@ -1,0 +1,121 @@
+.tabs-container {
+  display: table;
+  width: 100%;
+}
+
+.tabs,
+.tabs-content-wrap {
+  display: table-cell;
+
+  @media only screen and (max-width: $medium) {
+    display: block;
+  }
+}
+
+.tabs {
+  width: 15%;
+  max-width: 200px;
+
+  @media only screen and (max-width: $medium) {
+    width: 100%;
+    max-width: none;
+  }
+
+  @media only screen and (max-width: $xsmall) {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: none;
+    background: $bgColor;
+    border: 1px solid $border;
+  }
+}
+
+.tabs-item {
+  @media only screen and (max-width: $medium) {
+    float: left;
+  }
+
+  @media only screen and (max-width: $xsmall) {
+    float: none;
+  }
+}
+
+.tabs-link {
+  display: block;
+  padding: 10px 20px;
+  border-left: 5px solid transparent;
+  color: $fontColor;
+  text-decoration: none;
+  transition: 0.2s;
+  font-weight: 600;
+
+  &:hover,
+  &.active {
+    color: $secondaryColor;
+    border-left: 5px solid;
+
+    @media only screen and (max-width: $medium) {
+      border: 0;
+      background: none;
+
+      &::after {
+        width: 3px;
+      }
+    }
+  }
+
+  &.active {
+    background: $tabColor;
+  }
+
+  @media only screen and (max-width: $medium) {
+    position: relative;
+    border: 0;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 10%;
+      width: 1px;
+      height: 80%;
+      background: $border;
+    }
+  }
+
+  @media only screen and (max-width: $xsmall) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.tabs-content-wrap {
+  position: relative;
+  width: 85%;
+  padding: 20px;
+  background: $tabColor;
+  box-sizing: border-box;
+  vertical-align: top;
+
+  @media only screen and (max-width: $medium) {
+    width: 100%;
+    padding: 20px 10px;
+  }
+}
+
+.actions {
+  position: absolute;
+  top: -75px;
+  left: 5px;
+
+  @media only screen and (max-width: $medium) {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 20px;
+  }
+}

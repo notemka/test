@@ -1,0 +1,20 @@
+/******  Базовые стили  ******/
+
+body {
+  box-sizing: border-box;
+  font-family: $font;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: $fontColor;
+  text-decoration: none;
+}

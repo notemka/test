@@ -1,0 +1,21 @@
+/* ----------- Вспомогательные классы ----------- */
+
+.clearfix::after,
+.clearfix::before {
+  content: "";
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+}
+
+/* clearfix для IE6-7 */
+.clearfix {
+  zoom: 1;
+}
+
+/* скрывающий класс */
+.hidden {
+  display: none;
+}

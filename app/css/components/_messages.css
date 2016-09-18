@@ -1,0 +1,67 @@
+.message-item {
+  padding: 5px 0;
+  border-bottom: 1px solid $border;
+}
+
+.message-checkbox,
+.message-title,
+.message-actions {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.message-checkbox {
+  margin: 0;
+  margin-right: 17px;
+}
+
+.message-actions {
+  float: right;
+}
+
+.message-link {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  vertical-align: top;
+  text-indent: -9999px;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &.open {
+    background-image: svg-load("chevron-down.svg");
+    background-size: 80%;
+  }
+
+  &.closed {
+    background-image: svg-load("chevron-up.svg");
+    background-size: 80%;
+  }
+
+  &.remove {
+    background-image: svg-load("remove.svg", fill: #303030, stroke: #303030);
+    background-size: 70%;
+
+    &:hover {
+      background-image: svg-load("remove.svg", fill: #ef4949, stroke: #ef4949);
+    }
+  }
+
+  &.star {
+    background-image: svg-load("star.svg", fill: #303030, stroke: #303030);
+    background-size: 80%;
+
+    &:hover,
+    &.checked {
+      background-image: svg-load("star.svg", fill: #f9e10b, stroke: #f9e10b);
+    }
+  }
+}
+
+.message-text {
+  margin-top: 10px;
+  margin-left: 35px;
+  color: $secondaryfontColor;
+  font-style: italic;
+}
