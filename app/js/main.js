@@ -42,8 +42,6 @@
         let currentArray = JSON.parse(localStorage.getItem(storadge));
 
         // currentArray.filter((index, item) => {
-        //   console.log(item);
-        //   console.log(msgId);
         //   if(item !== msgId) {
         //     currentArray.push(msgId);
         //     localStorage[storadge] = JSON.stringify(currentArray);
@@ -61,38 +59,55 @@
 
     showActiveMsgList: () => {
       let msgList = $(".message-list");
-      var storageList = [];
+      let storageList = [];
 
       if (msgList.hasClass("deleted")) {
         if(localStorage.deleteMsgList) {
           let allMsgsArray = JSON.parse(localStorage.allMsgList);
-          let storageDeletedId = JSON.parse(localStorage.deleteMsgList);
-          let inboxMsgsArray;
+          let deletedMsgsIdArr = JSON.parse(localStorage.deleteMsgList);
+          let inboxMsgsArray = [];
+          let inbox = "inbox";
 
-          allMsgsArray = allMsgsArray.filter((msg) => {
-            if(storageDeletedId.indexOf(`${msg.id} + ''`) > -1) {
+          inboxMsgsArray = allMsgsArray.filter((msg) => {
+            if(deletedMsgsIdArr.indexOf(msg.id) > -1) {
               storageList.push(msg);
               return false;
             }
             return true;
           });
-
-          inboxMsgsArray = allMsgsArray;
-          app.checkLocalList(inboxMsgsArray);
-          return storageList;
+          app.checkLocalList(inbox, inboxMsgsArray);
+        }
+        else {
+          app.showInfoMessage();
         }
       }
-      else if (msgList.hasClass("starred") && !localStorage.starMsgList) {
-        
+      if (msgList.hasClass("starred")) {
+        if(localStorage.starMsgList) {
+          let starMsgsIdArr = JSON.parse(localStorage.starMsgList);
+          let inboxMsgsArray = JSON.parse(localStorage.inbox);
+
+          inboxMsgsArray = inboxMsgsArray.filter((msg) => {
+            if(starMsgsIdArr.indexOf(msg.id) > -1) {
+              storageList.push(msg);
+              return false;
+            }
+            return true;
+          });
+        }
+        else {
+          app.showInfoMessage();
+        }
       }
-      else if (msgList.hasClass("inbox") && !localStorage.inbox) {
-        $.getJSON("json/data.json", (data) => {
-          localStorage.allMsgList = JSON.stringify(data);
-        });
-        storageList = localStorage.allMsgList;
-      }
-      else {
-        app.showInfoMessage();
+      if (msgList.hasClass("inbox")) {
+        if(!localStorage.inbox) {
+          $.getJSON("json/data.json", (data) => {
+            localStorage.allMsgList = JSON.stringify(data);
+          });
+          storageList = JSON.parse(localStorage.allMsgList);
+        }
+        else {
+          app.openCurrentMsgList(JSON.parse(localStorage.inbox));
+        }
       }
       app.openCurrentMsgList(storageList);
     },
@@ -102,7 +117,7 @@
     },
 
     openCurrentMsgList: (storage) => {
-      $.each(JSON.parse(storage), (index, item) => {
+      $.each(storage, (index, item) => {
         $(".message-list").append(`
           <li class='message-item' data-id='${item.id}'>
             <div class='message'><input type='checkbox' class='message-checkbox'>
@@ -118,13 +133,12 @@
         });
     },
 
-    checkLocalList: (list) => {
-      if (!localStorage.list) {
-        localStorage.setItem(list, JSON.stringify(list));
+    checkLocalList: (storagelist, idArr) => {
+      if (!localStorage.storagelist) {
+        localStorage.setItem(storagelist, JSON.stringify(idArr));
       }
       else {
-        // localStorage.list = JSON.stringify(list);
-        localStorage[list] = JSON.stringify(list);
+        localStorage.storagelist = JSON.stringify(idArr);
       }
     },
 
