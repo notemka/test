@@ -7,6 +7,7 @@
     <meta name="description" content="Test for FS">
     <meta name="keywords" content="">
     <meta name="author" content="emmaKhayrullina">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bundle.css">
     <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
@@ -17,26 +18,23 @@
 <p class="browsehappy">Вы используете <strong>устаревший</strong> браузер. Пожалуйста <a href="http://browsehappy.com/">обновите</a> его.</p>
 <![endif]-->
     <header class="header">
-      <div class="logo">
-        <a href="/" class="logo-wrap"><img src="img/paperplane.svg" class="logo-img">
-          <div class="logo-text">Paperplane</div>
-        </a>
-      </div>
-      <div class="navigation-trigger"><a href="#" class="navigation-trigger-link">Menu</a></div>
-    </header>
+      <a href="/" class="header-logo"><img src="img/paperplane.svg" class="header-logo-img">
+        <div class="header-logo-text">Paperplane</div>
+      </a><a href="#" class="header-nav-trigger">Menu</a></header>
     <div class="container">
-      <div class="tabs-container">
-        <ul class="tabs clearfix">
-          <li class="tabs-item"><a href="/" class="tabs-link">Inbox</a></li>
-          <li class="tabs-item"><a href="/draft.html" class="tabs-link">Draft</a></li>
-          <li class="tabs-item"><a href="/starred.html" class="tabs-link">Starred</a></li>
-          <li class="tabs-item"><a href="/deleted.html" class="tabs-link">Deleted</a></li>
-        </ul>
-        <div class="tabs-content">
-          <div class="actions"><label for="main_checkbox" class="action-checkbox-label"> <input id="main_checkbox" type="checkbox" value="Select all" title="Select all" class="action-checkbox"><span>Select all messages</span></label>
-            <div class="action-buttons"><a id="button_new" href="/new.html" class="action-button">New</a><a id="button_star" href="#" class="action-button">Star</a><a id="button_delete" href="#" class="action-button">Delete</a></div>
-          </div>
-          <ul class="message-list inbox"></ul>
+      <ul class="tabs clearfix">
+        <li class="tabs-item"><a href="/" title="Inbox" class="tabs-link">Inbox</a></li>
+        <li class="tabs-item"><a href="/draft.html" title="Draft" class="tabs-link">Draft</a></li>
+        <li class="tabs-item"><a href="/starred.html" title="Starred" class="tabs-link">Starred</a></li>
+        <li class="tabs-item"><a href="/deleted.html" title="Deleted" class="tabs-link">Deleted</a></li>
+      </ul>
+      <div class="content-wrap">
+        <div class="content_actions"><label for="main_checkbox" class="content_actions-label"> <input id="main_checkbox" type="checkbox" value="Select all" title="Select all" class="content_actions-checkbox"><span>Select all messages</span></label>
+          <div class="content_actions-buttons"><a id="button_new" href="/new.html" class="content_actions-button">New</a><a id="button_star" href="#" class="content_actions-button">Star</a><a id="button_delete" href="#" class="content_actions-button">Delete</a></div>
+        </div>
+        <div class="content">
+          <div class="content_info-msg hidden">List is empty</div>
+          <ul class="content_msg-list inbox"></ul>
         </div>
       </div>
     </div>

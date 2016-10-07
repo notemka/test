@@ -6,59 +6,80 @@
 
     setUpListeners: () => {
       $(window).on("load", app.showActiveMsgList);
-      $(".message-list").on("click", app.openRemoveStarredMsg);
-      $(".navigation-trigger-link").on("click", app.toggleMobileNavigation);
+      $(window).on("resize", app.showNavigation);
+      $(".content_msg-list").on("click", app.openRemoveStarredMsg);
+      $(".header-nav-trigger").on("click", app.toggleMobileNavigation);
       $("#main_checkbox").on("change", app.selectAllMessages);
+      $(".nav").on("click", app.checkActiveTab);
+    },
+
+    checkActiveTab: (e) => {
+      e.preventDefault();
+
+      let currentLink = $(e.target);
+      let url = currentLink.attr("href");
+      let msgList = $(".content_msg-list");
+
+      currentLink.addClass("active").siblings().removeClass("active");
+      app.clearMsgList();
+
+      if (url !== "/") {
+        msgList.toggleClass(`${msgList.attr("class")} content_msg-list ${url.slice(1)}`);
+      }
+      else {
+        msgList.toggleClass(`${msgList.attr("class")} content_msg-list inbox`);
+      }
+      app.showActiveMsgList();
     },
 
     openRemoveStarredMsg: (e) => {
       let eTarget = $(e.target);
-      let currentMsg = eTarget.closest(".message-item");
+      let currentMsg = eTarget.closest(".content_msg-item");
       let currentMsgId = currentMsg.data("id");
-      let currentStoredge;
+      let currentStorage;
 
-      if(eTarget.hasClass("message-open-link")) {
-        e.preventDefault();
+      e.preventDefault();
 
+      if(eTarget.hasClass("open-link")) {
         eTarget.toggleClass("open closed");
         eTarget.text(eTarget.text() === "open" ? "close" : "open");
         eTarget.prop("title", eTarget.prop("title") === "open" ? "close" : "open");
-        currentMsg.find(".message-text").stop(true, true).slideToggle();
+        currentMsg.find(".content_msg-text").stop(true, true).slideToggle();
       }
       if (eTarget.hasClass("remove")) {
-        currentStoredge = "deleteMsgList";
-        app.moveMessage(currentStoredge, currentMsgId);
+        currentStorage = "deleteMsgList";
+        app.moveMessage(currentStorage, currentMsgId);
         currentMsg.remove();
       }
       if(eTarget.hasClass("star") && !eTarget.hasClass("checked")) {
-        currentStoredge = "starMsgList";
+        currentStorage = "starMsgList";
         eTarget.addClass("checked");
-        app.moveMessage(currentStoredge, currentMsgId);
+        app.moveMessage(currentStorage, currentMsgId);
       }
     },
 
-    moveMessage: (storadge, msgId) => {
-      if(localStorage[storadge]) {
-        let currentArray = JSON.parse(localStorage.getItem(storadge));
+    moveMessage: (storage, msgId) => {
+      if(localStorage[storage]) {
+        let currentArray = JSON.parse(localStorage.getItem(storage));
 
         // currentArray.filter((index, item) => {
         //   if(item !== msgId) {
         //     currentArray.push(msgId);
-        //     localStorage[storadge] = JSON.stringify(currentArray);
+        //     localStorage[storage] = JSON.stringify(currentArray);
         //   } else {
         //     return false;
         //   }
         // });
         currentArray.push(msgId);
-        localStorage[storadge] = JSON.stringify(currentArray);
+        localStorage[storage] = JSON.stringify(currentArray);
       }
       else {
-        localStorage.setItem(storadge, JSON.stringify([msgId]));
+        localStorage.setItem(storage, JSON.stringify([msgId]));
       }
     },
 
     showActiveMsgList: () => {
-      let msgList = $(".message-list");
+      let msgList = $(".content_msg-list");
       let storageList = [];
 
       if (msgList.hasClass("deleted")) {
@@ -112,44 +133,58 @@
       app.openCurrentMsgList(storageList);
     },
 
+    clearMsgList: () => {
+      $(".content_msg-list").html("")
+    },
+
     showInfoMessage: () => {
-      $(".tabs-content-msg").removeClass("hidden");
+      $(".content_info-msg").removeClass("hidden");
     },
 
     openCurrentMsgList: (storage) => {
       $.each(storage, (index, item) => {
-        $(".message-list").append(`
-          <li class='message-item' data-id='${item.id}'>
-            <div class='message'><input type='checkbox' class='message-checkbox'>
-              <div class='message-title'>${item.title}</div>
-              <div class='message-actions'>
-                <a href='#' title='open' class='message-link message-open-link open'>open</a>
-                <a href='#' title='delete' class='message-link remove'>remove</a>
-                <a href='#' title='like' class='message-link star'>like</a>
+        $(".content_msg-list").append(`
+          <li class="content_msg-item" data-id="${item.id}">
+            <div class="content_msg-inner">
+              <input type="checkbox" class="content_msg-checkbox">
+              <div class="content_msg-title">${item.title}</div>
+
+              <div class="content_msg-actions">
+                <a href="#" title="open" class="content_msg-link open-link open">open</a>
+                <a href="#" title="delete" class="content_msg-link remove">remove</a>
+                <a href="#" title="like" class="content_msg-link star">like</a>
               </div>
             </div>
-            <div class='message-text hidden'>${item.text}</div>
+            <div class="content_msg-text hidden">${item.text}</div>
           </li>`);
         });
     },
 
-    checkLocalList: (storagelist, idArr) => {
-      if (!localStorage.storagelist) {
-        localStorage.setItem(storagelist, JSON.stringify(idArr));
+    checkLocalList: (storageList, idArr) => {
+      if (!localStorage.storageList) {
+        localStorage.setItem(storageList, JSON.stringify(idArr));
       }
       else {
-        localStorage.storagelist = JSON.stringify(idArr);
+        localStorage.storageList = JSON.stringify(idArr);
       }
     },
 
     toggleMobileNavigation: (e) => {
       e.preventDefault();
 
-      $(".tabs").stop(true, true).slideToggle();
+      let nav = $(".nav");
+
+      nav.stop(true, true).slideToggle();
+    },
+
+    showNavigation: () => {
+      if (window.innerWidth > 480) {
+        $(".nav").removeAttr("style");
+      }
     },
 
     selectAllMessages: () => {
-      let checkboxes = $(".message-checkbox"),
+      let checkboxes = $(".content_msg-checkbox"),
         mainCheckbox = $("#main_checkbox");
 
       checkboxes.prop("checked", mainCheckbox.is(":checked"));

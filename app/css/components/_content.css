@@ -1,0 +1,46 @@
+.container {
+  display: table;
+  width: 100%;
+}
+
+.nav,
+.content {
+  display: table-cell;
+
+  @media only screen and (max-width: $medium) {
+    display: block;
+  }
+}
+
+.content {
+  position: relative;
+  width: 85%;
+  padding: 20px;
+  background: $tabColor;
+  box-sizing: border-box;
+  vertical-align: top;
+
+  @media only screen and (max-width: $medium) {
+    width: 100%;
+    padding: 20px 10px;
+  }
+}
+
+.content_info-msg {
+  text-align: center;
+  color: $secondaryfontColor;
+  font-style: italic;
+}
+
+.content_actions {
+  position: absolute;
+  top: -75px;
+  left: 5px;
+
+  @media only screen and (max-width: $medium) {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 20px;
+  }
+}

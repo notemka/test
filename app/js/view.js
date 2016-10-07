@@ -4,10 +4,10 @@
 //
 //     $.each(JSON.parse(storageList), (index, item) => {
 //     msgList.append(`
-//       <li class='message-item' data-id='${item.id}'>
+//       <li class='content_msg-item' data-id='${item.id}'>
 //         <div class='message'><input type='checkbox' class='message-checkbox'>
 //           <div class='message-title'>${item.title}</div>
-//           <div class='message-actions'>
+//           <div class='message-content_actions'>
 //             <a href='#' title='open' class='message-link message-open-link open'>open</a>
 //             <a href='#' title='delete' class='message-link remove'>remove</a>
 //             <a href='#' title='like' class='message-link star'>like</a>

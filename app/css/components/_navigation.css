@@ -1,18 +1,4 @@
-.tabs-container {
-  display: table;
-  width: 100%;
-}
-
-.tabs,
-.tabs-content-wrap {
-  display: table-cell;
-
-  @media only screen and (max-width: $medium) {
-    display: block;
-  }
-}
-
-.tabs {
+.nav {
   width: 15%;
   max-width: 200px;
 
@@ -33,17 +19,7 @@
   }
 }
 
-.tabs-item {
-  @media only screen and (max-width: $medium) {
-    float: left;
-  }
-
-  @media only screen and (max-width: $xsmall) {
-    float: none;
-  }
-}
-
-.tabs-link {
+.nav-link {
   display: block;
   padding: 10px 20px;
   border-left: 5px solid transparent;
@@ -74,10 +50,11 @@
   @media only screen and (max-width: $medium) {
     position: relative;
     border: 0;
+    float: left;
 
     &::after {
-      content: "";
       position: absolute;
+      content: "";
       right: 0;
       top: 10%;
       width: 1px;
@@ -87,41 +64,10 @@
   }
 
   @media only screen and (max-width: $xsmall) {
+    float: none;
+
     &::after {
       display: none;
     }
-  }
-}
-
-.tabs-content-wrap {
-  position: relative;
-  width: 85%;
-  padding: 20px;
-  background: $tabColor;
-  box-sizing: border-box;
-  vertical-align: top;
-
-  @media only screen and (max-width: $medium) {
-    width: 100%;
-    padding: 20px 10px;
-  }
-}
-
-.tabs-content-msg {
-  text-align: center;
-  color: $secondaryfontColor;
-  font-style: italic;
-}
-
-.actions {
-  position: absolute;
-  top: -75px;
-  left: 5px;
-
-  @media only screen and (max-width: $medium) {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-bottom: 20px;
   }
 }

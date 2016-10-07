@@ -1,4 +1,16 @@
 extends ../layouts/layout.jade
 
 block content
-  ul.message-list.inbox
+  .content
+    .content_actions
+      label.content_actions-label(for="main_checkbox") 
+        input.content_actions-checkbox(id="main_checkbox" type="checkbox" value="Select all" title="Select all")
+        span Select all messages
+      .content_actions-buttons
+        a.content_actions-button#button_new(href="/new.html") New
+        a.content_actions-button#button_star(href="#") Star
+        a.content_actions-button#button_delete(href="#") Delete
+
+    .content-inner
+      .content_info-msg.hidden List is empty
+      ul.content_msg-list.inbox

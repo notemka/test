@@ -2,12 +2,13 @@
   margin-bottom: 20px;
 }
 
-.logo {
+.header-logo {
   display: inline-block;
   width: 15%;
   min-width: 100px;
   height: 100px;
   overflow: hidden;
+  text-align: center;
   vertical-align: middle;
 
   @media only screen and (max-width: $xsmall) {
@@ -15,13 +16,7 @@
   }
 }
 
-.logo-wrap {
-  display: block;
-  height: 100%;
-  text-align: center;
-}
-
-.logo-img {
+.header-logo-img {
   width: 30px;
   margin: 15px 0 10px;
   transform: rotate(30deg);
@@ -31,28 +26,23 @@
   }
 }
 
-.logo-text {
+.header-logo-text {
   color: $primaryColor;
   font-weight: bold;
 }
 
-.navigation-trigger {
+.header-nav-trigger {
   float: right;
   display: none;
+  width: 25px;
+  height: 25px;
   margin: 15px;
+  background: svg-load("menu.svg") center center no-repeat;
+  background-size: 100%;
+  text-indent: -9999px;
 
   @media only screen and (max-width: $xsmall) {
     display: block;
     margin: 20px;
   }
-}
-
-.navigation-trigger-link {
-  float: right;
-  display: block;
-  width: 25px;
-  height: 25px;
-  background: svg-load("menu.svg") center center no-repeat;
-  background-size: 100%;
-  text-indent: -9999px;
 }

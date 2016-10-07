@@ -1,25 +1,25 @@
-.message-item {
+.content_msg-item {
   padding: 5px 0;
   border-bottom: 1px solid $border;
 }
 
-.message-checkbox,
-.message-title,
-.message-actions {
+.content_msg-checkbox,
+.content_msg-title,
+.content_msg-actions {
   display: inline-block;
   vertical-align: middle;
 }
 
-.message-checkbox {
+.content_msg-checkbox {
   margin: 0;
   margin-right: 17px;
 }
 
-.message-actions {
+.content_msg-actions {
   float: right;
 }
 
-.message-link {
+.content_msg-link {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -59,7 +59,7 @@
   }
 }
 
-.message-text {
+.content_msg-text {
   margin-top: 10px;
   margin-left: 35px;
   color: $secondaryfontColor;

@@ -9,20 +9,7 @@ html(lang="ru-RU")
     <![endif]-->
     include ../partials/header.jade
     .container
-      .tabs-container
-        include ../partials/tabs.jade
-        .tabs-content-wrap
-          .actions
-            label.action-checkbox-label(for="main_checkbox") 
-              input.action-checkbox(id="main_checkbox" type="checkbox" value="Select all" title="Select all")
-              span Select all messages
-            .action-buttons
-              a.action-button#button_new(href="/new.html") New
-              a.action-button#button_star(href="#") Star
-              a.action-button#button_delete(href="#") Delete
-
-          .tabs-content
-            .tabs-content-msg.hidden List is empty
-            block content
+      include ../partials/navigation.jade
+      block content
     include ../partials/footer.jade
     include ../partials/scripts.jade

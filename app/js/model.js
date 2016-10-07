@@ -1,8 +1,8 @@
 // var Model = {
 //   openMessages: => {
-//     $(".message-list").on("click", (e) => {
+//     $(".content_msg-list").on("click", (e) => {
 //       let eTarget = $(e.target);
-//       let currentMsg = eTarget.closest(".message-item");
+//       let currentMsg = eTarget.closest(".content_msg-item");
 //       let currentMsgId = currentMsg.data("id");
 //       let currentStoredge;
 //
@@ -59,7 +59,7 @@
 //   },
 //
 //   slideMenu: => {
-//     $(".navigation-trigger-link").on("click", (e) => {
+//     $(".header-nav-trigger-link").on("click", (e) => {
 //       e.preventDefault();
 //
 //       $(".tabs").stop(true, true).slideToggle();
