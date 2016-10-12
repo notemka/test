@@ -8,7 +8,7 @@
     <meta name="keywords" content="">
     <meta name="author" content="emmaKhayrullina">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bundle.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   </head>
@@ -22,21 +22,17 @@
         <div class="header-logo-text">Paperplane</div>
       </a><a href="#" class="header-nav-trigger">Menu</a></header>
     <div class="container">
-      <ul class="tabs clearfix">
-        <li class="tabs-item"><a href="/" title="Inbox" class="tabs-link">Inbox</a></li>
-        <li class="tabs-item"><a href="/draft.html" title="Draft" class="tabs-link">Draft</a></li>
-        <li class="tabs-item"><a href="/starred.html" title="Starred" class="tabs-link">Starred</a></li>
-        <li class="tabs-item"><a href="/deleted.html" title="Deleted" class="tabs-link">Deleted</a></li>
-      </ul>
-      <div class="content-wrap">
+      <nav class="nav clearfix"><a href="/" title="Inbox" class="nav-link active">Inbox</a><a href="/draft" title="Draft" class="nav-link">Draft</a><a href="/starred" title="Starred" class="nav-link">Starred</a><a href="/deleted" title="Deleted" class="nav-link">Deleted</a></nav>
+      <div
+        class="content">
         <div class="content_actions"><label for="main_checkbox" class="content_actions-label"> <input id="main_checkbox" type="checkbox" value="Select all" title="Select all" class="content_actions-checkbox"><span>Select all messages</span></label>
           <div class="content_actions-buttons"><a id="button_new" href="/new.html" class="content_actions-button">New</a><a id="button_star" href="#" class="content_actions-button">Star</a><a id="button_delete" href="#" class="content_actions-button">Delete</a></div>
         </div>
-        <div class="content">
+        <div class="content-inner">
           <div class="content_info-msg hidden">List is empty</div>
           <ul class="content_msg-list inbox"></ul>
         </div>
-      </div>
+    </div>
     </div>
     <footer class="footer">
       <div class="footer-inner"></div>

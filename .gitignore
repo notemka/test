@@ -1,6 +1,7 @@
 app/bower
 node_modules
 dist
+dest
 app/vendor
 .idea
 .htaccess
