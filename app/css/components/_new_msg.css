@@ -1,6 +1,35 @@
 .new-msg_form {
+  position: absolute;
+  bottom: 0;
+  right: 0;
   max-width: 450px;
-  margin: auto;
+  padding: 20px;
+  background: $bgColor;
+  border: 1px solid $border;
+  border-radius: 3px;
+}
+
+.new-msg_head {
+  margin-bottom: 10px;
+}
+
+.new-msg_head-title {
+  display: inline-block;
+  margin: 0;
+  color: $secondaryColor;
+  font-size: initial;
+  font-weight: normal;
+}
+
+.new-msg_link {
+  float: right;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: svg-load("close.svg");
+  background-size: cover;
+  color: $primaryColor;
+  text-indent: -9999px;
 }
 
 .new-msg_title,
@@ -16,14 +45,14 @@
   width: 100%;
   margin-bottom: 20px;
   color: $fontColor;
-  background: $darkenContentColor;
-  border: 2px solid transparent;
+  background: $contentColor;
+  border: 1px solid transparent;
   border-radius: 3px;
   box-sizing: border-box;
   outline: none;
 
   &:focus {
-    border: 2px solid $border;
+    border-color: $border;
   }
 }
 

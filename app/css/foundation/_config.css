@@ -8,9 +8,9 @@
 $primaryColor: #45907b;
 $secondaryColor: #f56435;
 
-$bgColor: #fcfaf4;
+$bgColor: #fcfaf0;
 $contentColor: #f7f2e0;
-$darkenContentColor: darken($contentColor, 5%);
+$darkenContentColor: darken($contentColor, 2%);
 $hoverColor: #8ac1b2;
 $trashColor: #ef4949;
 $starColor: #facf28;
@@ -19,7 +19,7 @@ $starColor: #facf28;
 
 /* ----- Typography ----- */
 $font: "Open Sans", sans-serif;
-$fontSize: 16px;
+$fontSize: 14px;
 $fontColor: #445361;
 $secondaryfontColor: #777;
 $lightFont: $bgColor;

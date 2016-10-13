@@ -11,7 +11,8 @@
       $(".header-nav-trigger").on("click", app.toggleMobileNavigation);
       $("#main_checkbox").on("change", app.selectAllMessages);
       $(".nav").on("click", app.selectActiveNavLink);
-      $("#button_new").on("click", app.renderNewMsgForm);
+      $("#button_new").on("click", app.slideToggleMsgForm);
+      $(".new-msg_link").on("click", app.slideToggleMsgForm);
     },
 
     selectActiveNavLink: (e) => {
@@ -24,11 +25,6 @@
 
       currentLink.addClass("active").siblings().removeClass("active");
       app.clearMsgList();
-
-      if (newMsgForm) {
-        newMsgForm.remove();
-        app.toggleMainCheckbox();
-      }
 
       if (url !== "/") {
         msgList.toggleClass(`${msgList.attr("class")} content_msg-list ${url.slice(1)}`);
@@ -197,29 +193,10 @@
       checkboxes.prop("checked", mainCheckbox.is(":checked"));
     },
 
-    renderNewMsgForm: (e) => {
+    slideToggleMsgForm: (e) => {
       e.preventDefault();
-      let newMsgForm = $(".new-msg_form")
 
-      $(".content_msg-list").addClass("hidden");
-      app.toggleMainCheckbox();
-
-      if(newMsgForm.length === 0) {
-        app.showNewMsgForm();
-      }
-    },
-
-    showNewMsgForm: () => {
-      $(".content-inner").append(`
-        <form class="new-msg_form">
-          <input class="new-msg_title" id="new_msg_title" placeholder="title">
-          <textarea class="new-msg_text" id="new_msg_text" placeholder="type your message"></textarea>
-          <input type="submit" class="new-msg_button button" value="Save">
-        </form>`)
-    },
-
-    toggleMainCheckbox: () => {
-      $("#main_checkbox").closest(".label").toggleClass("hide");
+      $(".new-msg_form").slideToggle();
     }
   };
   app.init();

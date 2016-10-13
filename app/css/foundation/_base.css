@@ -3,6 +3,7 @@
 body {
   background: $bgColor;
   font-family: $font;
+  font-size: $fontSize;
 }
 
 * {
