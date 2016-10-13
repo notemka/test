@@ -1,24 +1,21 @@
 .header {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .header-logo {
   display: inline-block;
   width: 15%;
   min-width: 100px;
-  height: 100px;
+  padding: 15px 0;
   overflow: hidden;
   text-align: center;
   vertical-align: middle;
-
-  @media only screen and (max-width: $xsmall) {
-    height: 65px;
-  }
 }
 
 .header-logo-img {
   width: 30px;
-  margin: 15px 0 10px;
   transform: rotate(30deg);
 
   @media only screen and (max-width: $xsmall) {
@@ -27,12 +24,11 @@
 }
 
 .header-logo-text {
-  color: $primaryColor;
-  font-weight: bold;
+  display: inline-block;
+  color: $secondaryColor;
 }
 
 .header-nav-trigger {
-  float: right;
   display: none;
   width: 25px;
   height: 25px;

@@ -1,27 +1,21 @@
-.container {
-  display: table;
-  width: 100%;
-}
-
-.nav,
-.content {
-  display: table-cell;
+.wrapper {
+  width: 85%;
+  margin: auto;
 
   @media only screen and (max-width: $medium) {
-    display: block;
+    width: 90%;
   }
 }
 
 .content {
-  position: relative;
-  width: 85%;
+  width: 100%;
+  min-height: 80vh;
   padding: 20px;
-  background: $tabColor;
+  background: $contentColor;
   box-sizing: border-box;
   vertical-align: top;
 
   @media only screen and (max-width: $medium) {
-    width: 100%;
     padding: 20px 10px;
   }
 }
@@ -32,15 +26,49 @@
   font-style: italic;
 }
 
+.content_actions-buttons {
+  display: inline-block;
+  border-radius: 3px;
+
+  @media only screen and (max-width: $xsmall) {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
 .content_actions {
-  position: absolute;
-  top: -75px;
-  left: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  @media only screen and (max-width: $small) {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+  }
+}
+
+.content_actions-checkbox {
+  display: inline-block;
+  margin: 5px 0;
+  font-size: 20px;
+  vertical-align: middle;
 
   @media only screen and (max-width: $medium) {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-bottom: 20px;
+    margin: 8px 15px 8px 0;
+  }
+
+  @media only screen and (max-width: $small) {
+    margin-right: 5px;
+  }
+}
+
+.content_actions-label {
+  span {
+    display: none;
+
+    @media only screen and (max-width: $small) {
+      display: inline-block;
+      vertical-align: middle;
+    }
   }
 }

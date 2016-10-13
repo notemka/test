@@ -10,18 +10,25 @@
       $(".content_msg-list").on("click", app.openRemoveStarredMsg);
       $(".header-nav-trigger").on("click", app.toggleMobileNavigation);
       $("#main_checkbox").on("change", app.selectAllMessages);
-      $(".nav").on("click", app.checkActiveTab);
+      $(".nav").on("click", app.selectActiveNavLink);
+      $("#button_new").on("click", app.renderNewMsgForm);
     },
 
-    checkActiveTab: (e) => {
+    selectActiveNavLink: (e) => {
       e.preventDefault();
 
       let currentLink = $(e.target);
       let url = currentLink.attr("href");
       let msgList = $(".content_msg-list");
+      let newMsgForm = $(".new-msg_form");
 
       currentLink.addClass("active").siblings().removeClass("active");
       app.clearMsgList();
+
+      if (newMsgForm) {
+        newMsgForm.remove();
+        app.toggleMainCheckbox();
+      }
 
       if (url !== "/") {
         msgList.toggleClass(`${msgList.attr("class")} content_msg-list ${url.slice(1)}`);
@@ -188,6 +195,31 @@
         mainCheckbox = $("#main_checkbox");
 
       checkboxes.prop("checked", mainCheckbox.is(":checked"));
+    },
+
+    renderNewMsgForm: (e) => {
+      e.preventDefault();
+      let newMsgForm = $(".new-msg_form")
+
+      $(".content_msg-list").addClass("hidden");
+      app.toggleMainCheckbox();
+
+      if(newMsgForm.length === 0) {
+        app.showNewMsgForm();
+      }
+    },
+
+    showNewMsgForm: () => {
+      $(".content-inner").append(`
+        <form class="new-msg_form">
+          <input class="new-msg_title" id="new_msg_title" placeholder="title">
+          <textarea class="new-msg_text" id="new_msg_text" placeholder="type your message"></textarea>
+          <input type="submit" class="new-msg_button button" value="Save">
+        </form>`)
+    },
+
+    toggleMainCheckbox: () => {
+      $("#main_checkbox").closest(".label").toggleClass("hide");
     }
   };
   app.init();

@@ -14,7 +14,7 @@ var vars = require("postcss-simple-vars");
 var autoprefixer = require("autoprefixer");
 var cssnext = require("cssnext");             // включает синтаксис будущего
 var nested = require("postcss-nested");
-var colorFunctions = require("postcss-color-function");
+var colorFunctions = require("postcss-colour-functions");
 var stripInlineComment = require("postcss-strip-inline-comments");
 var importCss = require("postcss-partial-import");
 var inlineSvg = require("postcss-inline-svg");
@@ -83,7 +83,7 @@ gulp.task("css", function() {
       path: "./app/img"
     }),
     stripInlineComment,
-    autoprefixer,
+    autoprefixer({ browsers: ["last 4 versions"] }),
     cssnano()
   ];
 

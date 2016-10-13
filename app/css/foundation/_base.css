@@ -1,8 +1,12 @@
 /******  Базовые стили  ******/
 
 body {
-  box-sizing: border-box;
+  background: $bgColor;
   font-family: $font;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 ul {

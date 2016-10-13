@@ -7,9 +7,9 @@ html(lang="ru-RU")
     <!--[if lt IE 7]>
     <p class="browsehappy">Вы используете <strong>устаревший</strong> браузер. Пожалуйста <a href="http://browsehappy.com/">обновите</a> его.</p>
     <![endif]-->
-    include ../partials/header.jade
-    .container
-      include ../partials/navigation.jade
-      block content
-    include ../partials/footer.jade
-    include ../partials/scripts.jade
+    .wrapper
+      include ../partials/header.jade
+      .container
+        block content
+      include ../partials/footer.jade
+      include ../partials/scripts.jade

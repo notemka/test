@@ -1,6 +1,10 @@
 .content_msg-item {
-  padding: 5px 0;
+  margin-bottom: 5px;
   border-bottom: 1px solid $border;
+}
+
+.content_msg-inner {
+  margin-bottom: 10px;
 }
 
 .content_msg-checkbox,
@@ -13,6 +17,13 @@
 .content_msg-checkbox {
   margin: 0;
   margin-right: 17px;
+}
+
+.content_msg-title {
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .content_msg-actions {
@@ -40,28 +51,29 @@
   }
 
   &.remove {
-    background-image: svg-load("remove.svg", fill: #303030, stroke: #303030);
+    background-image: svg-load("remove.svg", fill: $fontColor, stroke: $fontColor);
     background-size: 70%;
 
     &:hover {
-      background-image: svg-load("remove.svg", fill: #ef4949, stroke: #ef4949);
+      background-image: svg-load("remove.svg", fill: $trashColor, stroke: $trashColor);
     }
   }
 
   &.star {
-    background-image: svg-load("star.svg", fill: #303030, stroke: #303030);
+    background-image: svg-load("star.svg", fill: $fontColor, stroke: $fontColor);
     background-size: 80%;
 
     &:hover,
     &.checked {
-      background-image: svg-load("star.svg", fill: #f9e10b, stroke: #f9e10b);
+      background-image: svg-load("star.svg", fill: $starColor, stroke: $starColor);
     }
   }
 }
 
 .content_msg-text {
-  margin-top: 10px;
-  margin-left: 35px;
+  padding: 10px;
+  padding-left: 35px;
+  background: $darkenContentColor;
   color: $secondaryfontColor;
   font-style: italic;
 }

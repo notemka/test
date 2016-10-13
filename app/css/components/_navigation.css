@@ -1,28 +1,25 @@
 .nav {
-  width: 15%;
-  max-width: 200px;
-
-  @media only screen and (max-width: $medium) {
-    width: 100%;
-    max-width: none;
-  }
+  width: 85%;
+  text-align: right;
 
   @media only screen and (max-width: $xsmall) {
     position: absolute;
-    top: 65px;
+    top: 80px;
     left: 0;
     right: 0;
+    width: 100%;
     z-index: 100;
     display: none;
     background: $bgColor;
     border: 1px solid $border;
+    text-align: left;
   }
 }
 
 .nav-link {
-  display: block;
+  display: inline-block;
   padding: 10px 20px;
-  border-left: 5px solid transparent;
+  border-top: 5px solid transparent;
   color: $fontColor;
   text-decoration: none;
   transition: 0.2s;
@@ -30,44 +27,24 @@
 
   &:hover,
   &.active {
-    color: $secondaryColor;
-    border-left: 5px solid;
-
-    @media only screen and (max-width: $medium) {
-      border: 0;
-      background: none;
-
-      &::after {
-        width: 3px;
-      }
-    }
+    color: $hoverColor;
   }
 
   &.active {
-    background: $tabColor;
+    background: $contentColor;
+    border-top: 5px solid;
+
+    @media only screen and (max-width: $xsmall) {
+      border: 0;
+    }
   }
 
   @media only screen and (max-width: $medium) {
-    position: relative;
-    border: 0;
-    float: left;
-
-    &::after {
-      position: absolute;
-      content: "";
-      right: 0;
-      top: 10%;
-      width: 1px;
-      height: 80%;
-      background: $border;
-    }
+    padding: 10px;
   }
 
   @media only screen and (max-width: $xsmall) {
-    float: none;
-
-    &::after {
-      display: none;
-    }
+    display: block;
+    border: 0;
   }
 }

@@ -1,115 +1,36 @@
-.content_actions-buttons {
+.button {
   display: inline-block;
-  border-radius: 3px;
-
-  @media only screen and (max-width: $small) {
-    display: block;
-  }
-}
-
-.new-msg_button,
-.content_actions-button {
-  display: inline-block;
-  padding: 5px 30px;
+  width: 75px;
+  margin-right: 2px;
+  padding: 2px 10px;
   border: 1px solid transparent;
-  border-right-color: #ebebeb;
+  border-radius: 3px;
   background: $primaryColor;
   text-decoration: none;
   text-align: center;
   transition: background 0.6s;
   color: $lightFont;
+  outline: none;
   font-weight: 600;
 
   &:hover,
   &.active {
-    background: $secondaryColor;
+    background: $hoverColor;
   }
 
-  &:first-child {
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-  }
-
-  &:last-child {
-    border-right-color: transparent;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-  }
-
-  @media only screen and (max-width: $medium) {
-    padding: 2px 15px;
+  &-last-child {
+    margin-right: 0;
   }
 
   @media only screen and (max-width: $small) {
     width: 100%;
     padding: 5px 0;
-    border-right-color: transparent;
     border-bottom-color: $lightFont;
     border-radius: 0;
-
-    &:first-child,
-    &:last-child {
-      border-radius: 0;
-    }
   }
 }
 
-.content_actions-checkbox {
+.label {
   display: inline-block;
-  margin: 5px 17px;
-  font-size: 20px;
-  vertical-align: middle;
-
-  @media only screen and (max-width: $medium) {
-    margin: 8px 15px 8px 0;
-  }
-
-  @media only screen and (max-width: $small) {
-    margin-right: 5px;
-  }
-}
-
-.content_actions-label {
-  display: inline-block;
-
-  span {
-    display: none;
-
-    @media only screen and (max-width: $small) {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
-
-  @media only screen and (max-width: $small) {
-    margin-bottom: 15px;
-  }
-}
-
-.new-msg_form {
-  width: 450px;
-}
-
-.new-msg_title,
-.new-msg_text {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 20px;
-  border: 1px solid $border;
-  border-radius: 3px;
-  box-sizing: border-box;
-}
-
-.new-msg_title {
-  padding: 5px 10px;
-}
-
-.new-msg_text {
-  height: 150px;
-  padding: 10px;
-  resize: none;
-}
-
-.new-msg_button {
-  border-radius: 3px;
+  color: $secondaryfontColor;
 }

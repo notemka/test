@@ -5,24 +5,27 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700&subset=cyrillic");
 
 /* ------------- Colors ------------- */
-$primaryColor: #facf28;
-$secondaryColor: #8dcc2a;
+$primaryColor: #45907b;
+$secondaryColor: #f56435;
 
-$bgColor: #fff;
-$tabColor: #f7f7f7;
-$starColor: #f9e10b;
+$bgColor: #fcfaf4;
+$contentColor: #f7f2e0;
+$darkenContentColor: darken($contentColor, 5%);
+$hoverColor: #8ac1b2;
+$trashColor: #ef4949;
+$starColor: #facf28;
 
 /* ------------- Base ------------- */
 
 /* ----- Typography ----- */
 $font: "Open Sans", sans-serif;
 $fontSize: 16px;
-$fontColor: #303030;
+$fontColor: #445361;
 $secondaryfontColor: #777;
 $lightFont: $bgColor;
 
 /* ----- Borders & Box Shadow ----- */
-$border: #ebebeb;
+$border: #e7debc;
 
 /* ----- Screen breakpoints ----- */
 $small: 320px;

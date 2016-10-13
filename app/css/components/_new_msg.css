@@ -1,0 +1,38 @@
+.new-msg_form {
+  max-width: 450px;
+  margin: auto;
+}
+
+.new-msg_title,
+.new-msg_text {
+  &::-webkit-input-placeholder {
+    color: darken($contentColor, 30%);
+  }
+}
+
+.new-msg_title,
+.new-msg_text {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+  color: $fontColor;
+  background: $darkenContentColor;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  box-sizing: border-box;
+  outline: none;
+
+  &:focus {
+    border: 2px solid $border;
+  }
+}
+
+.new-msg_title {
+  padding: 5px 10px;
+}
+
+.new-msg_text {
+  height: 150px;
+  padding: 10px;
+  resize: none;
+}
