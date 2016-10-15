@@ -5,7 +5,7 @@
     },
 
     setUpListeners: () => {
-      $(window).on("load", app.showActiveMsgList);
+      $(window).on("load", app.createLocalList);
       $(window).on("resize", app.showNavigation);
       $(".content_msg-list").on("click", app.openRemoveStarredMsg);
       $(".header-nav-trigger").on("click", app.toggleMobileNavigation);
@@ -13,6 +13,8 @@
       $(".nav").on("click", app.selectActiveNavLink);
       $("#button_new").on("click", app.slideToggleMsgForm);
       $(".new-msg_link").on("click", app.slideToggleMsgForm);
+      $(".new-msg_form").on("submit", app.saveNewMsg);
+      $(".new-msg_field").on("input", app.removeErrorClass);
     },
 
     selectActiveNavLink: (e) => {
@@ -26,6 +28,10 @@
       currentLink.addClass("active").siblings().removeClass("active");
       app.clearMsgList();
 
+      if (window.innerWidth <= 480) {
+        app.toggleMobileNavigation(e);
+      }
+
       if (url !== "/") {
         msgList.toggleClass(`${msgList.attr("class")} content_msg-list ${url.slice(1)}`);
       }
@@ -33,6 +39,10 @@
         msgList.toggleClass(`${msgList.attr("class")} content_msg-list inbox`);
       }
       app.showActiveMsgList();
+    },
+
+    clearMsgList: () => {
+      $(".content_msg-list").html("")
     },
 
     openRemoveStarredMsg: (e) => {
@@ -50,12 +60,12 @@
         currentMsg.find(".content_msg-text").stop(true, true).slideToggle();
       }
       if (eTarget.hasClass("remove")) {
-        currentStorage = "deleteMsgList";
+        currentStorage = "deleteMsgIdList";
         app.moveMessage(currentStorage, currentMsgId);
         currentMsg.remove();
       }
       if(eTarget.hasClass("star") && !eTarget.hasClass("checked")) {
-        currentStorage = "starMsgList";
+        currentStorage = "starMsgIdList";
         eTarget.addClass("checked");
         app.moveMessage(currentStorage, currentMsgId);
       }
@@ -81,67 +91,68 @@
       }
     },
 
+    createLocalList: () => {
+      if (!localStorage.inboxList) {
+        $.getJSON("json/data.json", (data) => {
+          localStorage.setItem("inboxList", JSON.stringify(data));
+        });
+      }
+      app.openCurrentMsgList(JSON.parse(localStorage.inboxList));
+    },
+
     showActiveMsgList: () => {
       let msgList = $(".content_msg-list");
-      let storageList = [];
+      let deleteMsgIdList = "deleteMsgIdList";
+      let starMsgIdList = "starMsgIdList";
 
       if (msgList.hasClass("deleted")) {
-        if(localStorage.deleteMsgList) {
-          let allMsgsArray = JSON.parse(localStorage.allMsgList);
-          let deletedMsgsIdArr = JSON.parse(localStorage.deleteMsgList);
-          let inboxMsgsArray = [];
-          let inbox = "inbox";
-
-          inboxMsgsArray = allMsgsArray.filter((msg) => {
-            if(deletedMsgsIdArr.indexOf(msg.id) > -1) {
-              storageList.push(msg);
-              return false;
-            }
-            return true;
-          });
-          app.checkLocalList(inbox, inboxMsgsArray);
-        }
-        else {
-          app.showInfoMessage();
-        }
+        app.loadMsgList(deleteMsgIdList);
       }
+
       if (msgList.hasClass("starred")) {
-        if(localStorage.starMsgList) {
-          let starMsgsIdArr = JSON.parse(localStorage.starMsgList);
-          let inboxMsgsArray = JSON.parse(localStorage.inbox);
-
-          inboxMsgsArray = inboxMsgsArray.filter((msg) => {
-            if(starMsgsIdArr.indexOf(msg.id) > -1) {
-              storageList.push(msg);
-              return false;
-            }
-            return true;
-          });
-        }
-        else {
-          app.showInfoMessage();
-        }
+        app.loadMsgList(starMsgIdList);
       }
+
       if (msgList.hasClass("inbox")) {
-        if(!localStorage.inbox) {
-          $.getJSON("json/data.json", (data) => {
-            localStorage.allMsgList = JSON.stringify(data);
-          });
-          storageList = JSON.parse(localStorage.allMsgList);
-        }
-        else {
-          app.openCurrentMsgList(JSON.parse(localStorage.inbox));
+        app.openCurrentMsgList(JSON.parse(localStorage.inboxList));
+      }
+    },
+
+    loadMsgList: (checkedMsgIdList) => {
+      let filteredList = [];
+
+      if(localStorage[checkedMsgIdList]) {
+        let checkedMsgIdArr = JSON.parse(localStorage[checkedMsgIdList]);
+        let mainArray = JSON.parse(localStorage.inboxList);
+
+        mainArray = mainArray.filter((msg) => {
+          if(checkedMsgIdArr.indexOf(msg.id) > -1) {
+            filteredList.push(msg);
+            return false;
+          }
+          return true;
+        });
+
+        if (checkedMsgIdList === "deletedMsgIdList") {
+          localStorage.inboxList = JSON.stringify(mainArray);
         }
       }
-      app.openCurrentMsgList(storageList);
+      else {
+        app.toggleInfoMessage();
+      }
+
+      app.openCurrentMsgList(filteredList);
     },
 
-    clearMsgList: () => {
-      $(".content_msg-list").html("")
-    },
+    toggleInfoMessage: () => {
+      let infoMsg = $(".content_info-msg");
 
-    showInfoMessage: () => {
-      $(".content_info-msg").removeClass("hidden");
+      if ($(".content_msg-list").html() === "") {
+        infoMsg.removeClass("hidden");
+      }
+      else {
+        infoMsg.addClass("hidden");
+      }
     },
 
     openCurrentMsgList: (storage) => {
@@ -163,21 +174,10 @@
         });
     },
 
-    checkLocalList: (storageList, idArr) => {
-      if (!localStorage.storageList) {
-        localStorage.setItem(storageList, JSON.stringify(idArr));
-      }
-      else {
-        localStorage.storageList = JSON.stringify(idArr);
-      }
-    },
-
     toggleMobileNavigation: (e) => {
       e.preventDefault();
 
-      let nav = $(".nav");
-
-      nav.stop(true, true).slideToggle();
+      $(".nav").stop(true, true).slideToggle();
     },
 
     showNavigation: () => {
@@ -197,6 +197,34 @@
       e.preventDefault();
 
       $(".new-msg_form").slideToggle();
+      $(".new-msg_field").removeClass("error-field");
+    },
+
+    saveNewMsg: (e) => {
+      e.preventDefault();
+
+      let draftArr = [];
+
+      app.checkFields();
+      // app.checkLocalList("draftList", draftArr);
+    },
+
+    checkFields: () => {
+      $.each($(".new-msg_field"), (index, field) => {
+        if (!$(field).val()) {
+          $(field).focus().addClass("error-field");
+        }
+        else {
+          $(field).attr("data-value", $(field).val());
+        }
+      });
+    },
+
+    removeErrorClass: (e) => {
+      let currentField = $(e.target)
+      if (currentField.hasClass("error-field")) {
+        currentField.removeClass("error-field");
+      }
     }
   };
   app.init();

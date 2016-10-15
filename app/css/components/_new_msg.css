@@ -32,15 +32,7 @@
   text-indent: -9999px;
 }
 
-.new-msg_title,
-.new-msg_text {
-  &::-webkit-input-placeholder {
-    color: darken($contentColor, 30%);
-  }
-}
-
-.new-msg_title,
-.new-msg_text {
+.new-msg_field {
   display: inline-block;
   width: 100%;
   margin-bottom: 20px;
@@ -53,6 +45,14 @@
 
   &:focus {
     border-color: $border;
+  }
+
+  &::-webkit-input-placeholder {
+    color: darken($contentColor, 30%);
+  }
+
+  &.error-field {
+    border-color: $trashColor;
   }
 }
 
