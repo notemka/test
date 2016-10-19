@@ -38,7 +38,7 @@
       else {
         msgList.toggleClass(`${msgList.attr("class")} content_msg-list inbox`);
       }
-      app.showActiveMsgList();
+      app.showActiveMsgList(msgList);
     },
 
     clearMsgList: () => {
@@ -93,15 +93,15 @@
 
     createLocalList: () => {
       if (!localStorage.inboxList) {
-        $.getJSON("json/data.json", (data) => {
+        $.getJSON("data.json", (data) => {
           localStorage.setItem("inboxList", JSON.stringify(data));
+          localStorage.setItem("allMessagesList", JSON.stringify(data));
         });
       }
       app.openCurrentMsgList(JSON.parse(localStorage.inboxList));
     },
 
-    showActiveMsgList: () => {
-      let msgList = $(".content_msg-list");
+    showActiveMsgList: (msgList) => {
       let deleteMsgIdList = "deleteMsgIdList";
       let starMsgIdList = "starMsgIdList";
 
@@ -116,6 +116,7 @@
       if (msgList.hasClass("inbox")) {
         app.openCurrentMsgList(JSON.parse(localStorage.inboxList));
       }
+      app.toggleInfoMessage();
     },
 
     loadMsgList: (checkedMsgIdList) => {
@@ -123,9 +124,9 @@
 
       if(localStorage[checkedMsgIdList]) {
         let checkedMsgIdArr = JSON.parse(localStorage[checkedMsgIdList]);
-        let mainArray = JSON.parse(localStorage.inboxList);
+        let mainArray = JSON.parse(localStorage.allMessagesList);
 
-        mainArray = mainArray.filter((msg) => {
+        let newMainArray = mainArray.filter((msg) => {
           if(checkedMsgIdArr.indexOf(msg.id) > -1) {
             filteredList.push(msg);
             return false;
@@ -133,15 +134,12 @@
           return true;
         });
 
-        if (checkedMsgIdList === "deletedMsgIdList") {
-          localStorage.inboxList = JSON.stringify(mainArray);
+        if (checkedMsgIdList == "deleteMsgIdList") {
+          localStorage.inboxList = JSON.stringify(newMainArray);
         }
-      }
-      else {
-        app.toggleInfoMessage();
-      }
 
-      app.openCurrentMsgList(filteredList);
+        app.openCurrentMsgList(filteredList);
+      }
     },
 
     toggleInfoMessage: () => {

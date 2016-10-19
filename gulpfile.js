@@ -56,7 +56,7 @@ gulp.task("images", function () {
 
 // перенос остальных файлов, такие как favicon и пр.
 gulp.task("extras", function () {
-  return gulp.src(["./app/*.*", "!app/*.html"])
+  return gulp.src(["./app/json/*.json", "./app/*.*", "!app/*.html"])
               .pipe(gulp.dest("./dest"));
 });
 
