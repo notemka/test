@@ -113,6 +113,10 @@
         app.loadMsgList(starMsgIdList);
       }
 
+      if (msgList.hasClass("draft")) {
+        app.openCurrentMsgList(JSON.parse(localStorage.draftList));
+      }
+
       if (msgList.hasClass("inbox")) {
         app.openCurrentMsgList(JSON.parse(localStorage.inboxList));
       }
@@ -194,6 +198,8 @@
     slideToggleMsgForm: (e) => {
       e.preventDefault();
 
+      $("#button_new").toggleClass("disable");
+
       $(".new-msg_form").slideToggle();
       $(".new-msg_field").removeClass("error-field");
     },
@@ -201,10 +207,34 @@
     saveNewMsg: (e) => {
       e.preventDefault();
 
-      let draftArr = [];
+      let draftMsgArr = [];
+      let draftMsgItem = {};
+      let counter;
 
-      app.checkFields();
-      // app.checkLocalList("draftList", draftArr);
+      draftMsgItem.title = $("input.new-msg_field").val();
+      draftMsgItem.text = $("textarea.new-msg_field").val();
+
+      if (localStorage.draftList) {
+        counter = JSON.parse(localStorage.draftList)[0].id + 1;
+        draftMsgItem.id = counter++;
+
+        draftMsgArr = JSON.parse(localStorage.draftList);
+        draftMsgArr.push(draftMsgItem);
+
+        localStorage.draftList = JSON.stringify(draftMsgArr);
+      }
+      else {
+        draftMsgItem.id = JSON.parse(localStorage.allMessagesList).length + 1;
+        draftMsgArr.push(draftMsgItem);
+        localStorage.setItem("draftList", JSON.stringify(draftMsgArr));
+      }
+      draftMsgArr = [];
+      draftMsgItem = {};
+      app.clearForm();
+    },
+
+    clearForm: () => {
+      $(".new-msg_field").val("");
     },
 
     checkFields: () => {

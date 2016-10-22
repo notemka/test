@@ -1,2 +1,8 @@
-<p>Развернуть проект: в командной строке наберите: <br><i>npm i</i></p>
-<p>Запустить проект: <i>gulp</i></p>
+Test app
+-
+
+- Clone this repo: `git clone git@github.com:notemka/test.git`
+
+- Run setup: `npm i`
+
+- Run local server: `gulp`

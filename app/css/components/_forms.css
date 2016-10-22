@@ -18,6 +18,12 @@
     background: $hoverColor;
   }
 
+  &.disable {
+    pointer-events: none;
+    cursor: default;
+    opacity: .4;
+  }
+
   &-last-child {
     margin-right: 0;
   }
