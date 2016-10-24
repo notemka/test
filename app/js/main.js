@@ -12,6 +12,7 @@
       $("#main_checkbox").on("change", app.selectAllMessages);
       $(".nav").on("click", app.selectActiveNavLink);
       $("#button_new").on("click", app.slideToggleMsgForm);
+      $("#button_delete").on("click", app.removeCheckedMsgs);
       $(".new-msg_link").on("click", app.slideToggleMsgForm);
       $(".new-msg_form").on("submit", app.saveNewMsg);
       $(".new-msg_field").on("input", app.removeErrorClass);
@@ -193,6 +194,51 @@
         mainCheckbox = $("#main_checkbox");
 
       checkboxes.prop("checked", mainCheckbox.is(":checked"));
+    },
+
+    removeCheckedMsgs: (e) => {
+      e.preventDefault();
+
+      let msgList = $(".content_msg-list");
+      let checkedCheckboxes = msgList.find(".content_msg-checkbox").is(":checked");
+      let checkedItems, filteredList, checkedMsgIdArr = [],
+      currentList;
+
+      if (msgList.hasClass("inbox") || msgList.hasClass("starred")) {
+        currentList = "inboxList";
+      }
+      if (msgList.hasClass("draft")) {
+        currentList = "draftList";
+      }
+      else {
+        currentList = "deleteMsgIdList";
+      }
+
+      if (checkedCheckboxes) {
+        console.log(currentList != "deleteMsgIdList");
+        if (currentList != "deleteMsgIdList") {
+          $.each(msgList.find(".content_msg-checkbox"), (index, checkbox) => {
+            if ($(checkbox).is(":checked")) {
+              // checkedItems.push($(checkbox).closest(".content_msg-item"));
+              checkedMsgIdArr.push($(checkbox).closest(".content_msg-item").data("id"));
+            };
+          });
+
+          let newArr = JSON.parse(localStorage[currentList]).filter((msg) => {
+            if(checkedMsgIdArr.indexOf(msg.id) === -1) {
+              filteredList.push(msg);
+              return false;
+            }
+            return true;
+          });
+          localStorage[currentList] = JSON.stringify(newArr);
+          localStorage.deleteMsgIdList = JSON.stringify(JSON.parse(localStorage.deleteMsgIdList).push(filteredList));
+          checkedItems.remove();
+        }
+        else {
+          console.log("This is deleted list");
+        }
+      }
     },
 
     slideToggleMsgForm: (e) => {
