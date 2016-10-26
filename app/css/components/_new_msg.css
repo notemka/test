@@ -1,5 +1,5 @@
 .new-msg_form {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   max-width: 450px;

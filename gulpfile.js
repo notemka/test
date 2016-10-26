@@ -49,7 +49,7 @@ gulp.task("images", function () {
   return gulp.src("./app/img/*")
     .pipe(imagemin({
       progressive: true,
-      interlaced:true
+      interlaced: true
     }))
     .pipe(gulp.dest("./dest/img"));
 });
