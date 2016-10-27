@@ -5,7 +5,7 @@ class App {
     this.$msgList = ui.find(".content_msg-list");
     this.$listInfoMsg = ui.find(".content_info-msg");
     this.$mainCheckbox = ui.find("#main_checkbox");
-    this.$msgCheckboxes = this.$msgList.find(".content_msg-checkbox");
+    this.$msgCheckboxes = ui.find(".content_msg-checkbox");
     this.$newMsgButton = ui.find("#button_new");
     this.$newMsgCloseLink = ui.find(".new-msg_link");
     this.$newMsgForm = ui.find(".new-msg_form");
@@ -126,7 +126,7 @@ class App {
       this.loadMsgList(starMsgIdList);
     }
 
-    if (this.$msgList.hasClass("draft")) {
+    if (this.$msgList.hasClass("draft") && localStorage.draftList) {
       this.openCurrentMsgList(JSON.parse(localStorage.draftList));
     }
 
@@ -207,45 +207,59 @@ class App {
     e.preventDefault();
 
     let checkboxes = this.$msgList.find(".content_msg-checkbox");
-    let deletedList = JSON.parse(localStorage.deleteMsgIdList);
-    let filteredList = [];
-    let checkedMsgIdArr = [],
-    currentList;
-
-    if (this.$msgList.hasClass("inbox") || this.$msgList.hasClass("starred")) {
-      currentList = "inboxList";
-    }
-    if (this.$msgList.hasClass("draft")) {
-      currentList = "draftList";
-    }
-    else {
-      currentList = "deleteMsgIdList";
-    }
+    let checkedMsgIdArr = [];
 
     if (checkboxes.is(":checked")) {
-      if (currentList != "deleteMsgIdList" && currentList != "draftList") {
-        $.each(checkboxes, (index, checkbox) => {
-          if ($(checkbox).is(":checked")) {
-            checkedMsgIdArr.push($(checkbox).closest(".content_msg-item").data("id"));
-            $(checkbox).closest(".content_msg-item").remove();
-          };
-        });
+      $.each(checkboxes, (index, checkbox) => {
+        if ($(checkbox).is(":checked")) {
+          checkedMsgIdArr.push($(checkbox).closest(".content_msg-item").data("id"));
+          $(checkbox).closest(".content_msg-item").remove();
+        };
+      });
 
-        let newArr = JSON.parse(localStorage[currentList]).filter((msg) => {
-          if(checkedMsgIdArr.indexOf(msg.id) > -1) {
-            filteredList.push(msg.id);
-            return false;
-          }
-          return true;
-        });
-        console.log(filteredList);
-        localStorage[currentList] = JSON.stringify(newArr);
-        localStorage.deleteMsgIdList = JSON.stringify(deletedList.concat(filteredList));
+      this.removeMsgs(checkedMsgIdArr);
+    }
+  }
+
+  removeMsgs (checkedMsgIdArr) {
+    let newArr;
+
+    if (this.$msgList.hasClass("inbox") || this.$msgList.hasClass("starred")) {
+      newArr = JSON.parse(localStorage.inboxList).filter((msg) => {
+        if(checkedMsgIdArr.indexOf(msg.id) > -1) {
+          return false;
+        }
+        return true;
+      });
+
+      localStorage.inboxList = JSON.stringify(newArr);
+
+      if (localStorage.deleteMsgIdList) {
+        localStorage.deleteMsgIdList = JSON.stringify(JSON.parse(localStorage.deleteMsgIdList).concat(checkedMsgIdArr));
       }
       else {
-        console.log("This is deleted list");
+        localStorage.deleteMsgIdList = JSON.stringify(checkedMsgIdArr);
       }
     }
+    else if (this.$msgList.hasClass("draft")) {
+      newArr = JSON.parse(localStorage.draftList).filter((msg) => {
+        if(checkedMsgIdArr.indexOf(msg.id) > -1) {
+          return false;
+        }
+        return true;
+      });
+      localStorage.draftList = JSON.stringify(newArr);
+    }
+    else {
+      newArr = JSON.parse(localStorage.deleteMsgIdList).filter((id) => {
+        if(checkedMsgIdArr.indexOf(id) > -1) {
+          return false;
+        }
+        return true;
+      });
+      localStorage.deleteMsgIdList = JSON.stringify(newArr);
+    }
+    newArr = [];
   }
 
   slideToggleMsgForm (e) {

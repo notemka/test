@@ -101,7 +101,7 @@ gulp.task("js", function() {
     .bundle()
     .pipe(source("bundle.js"))
     .pipe(buffer())
-    .pipe(uglify())
+    // .pipe(uglify())
     .on("error", log)
     .pipe(gulp.dest("./dest/js", uglify()))
     .pipe(reload({stream: true}));
