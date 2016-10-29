@@ -12,6 +12,7 @@ class App {
     this.$newMsgFields = ui.find(".new-msg_field");
     this.$newMsgInput = ui.find("input.new-msg_field");
     this.$newMsgTextarea = ui.find("textarea.new-msg_field");
+    this.$newMsgInfo = ui.find(".new-msg_info");
     this.$deleteMsgButton = ui.find("#button_delete");
 
     this.initEvents();
@@ -22,13 +23,26 @@ class App {
     $(window).on("resize", this.showNavigation.bind(this));
     this.$navigationTrigger.on("click", this.toggleMobileNavigation.bind(this));
     this.$nav.on("click", this.selectActiveNavLink.bind(this));
-    this.$msgList.on("click", this.openRemoveStarredMsg.bind(this));
+    this.$msgList.on("click", this.messageActions.bind(this));
     this.$mainCheckbox.on("change", this.selectAllMessages.bind(this));
     this.$deleteMsgButton.on("click", this.removeCheckedMsgs.bind(this));
     this.$newMsgButton.on("click", this.slideToggleMsgForm.bind(this));
     this.$newMsgCloseLink.on("click", this.slideToggleMsgForm.bind(this));
     this.$newMsgForm.on("submit", this.saveNewMsg.bind(this));
     this.$newMsgFields.on("input", this.removeErrorClass.bind(this));
+  }
+
+  // Navigation
+  toggleMobileNavigation (e) {
+    e.preventDefault();
+
+    this.$nav.stop(true, true).slideToggle();
+  }
+
+  showNavigation () {
+    if (window.innerWidth > 480) {
+      this.$nav.removeAttr("style");
+    }
   }
 
   selectActiveNavLink (e) {
@@ -57,53 +71,7 @@ class App {
     this.$msgList.html("");
   }
 
-  openRemoveStarredMsg (e) {
-    let eTarget = $(e.target);
-    let currentMsg = eTarget.closest(".content_msg-item");
-    let currentMsgId = currentMsg.data("id");
-    let currentStorage;
-
-    if(eTarget.hasClass("open-link")) {
-      e.preventDefault();
-      eTarget.toggleClass("open closed");
-      eTarget.text(eTarget.text() === "open" ? "close" : "open");
-      eTarget.prop("title", eTarget.prop("title") === "open" ? "close" : "open");
-      currentMsg.find(".content_msg-text").stop(true, true).slideToggle();
-    }
-    if (eTarget.hasClass("remove")) {
-      e.preventDefault();
-      currentStorage = "deleteMsgIdList";
-      this.moveMessage(currentStorage, currentMsgId);
-      currentMsg.remove();
-    }
-    if(eTarget.hasClass("star") && !eTarget.hasClass("checked")) {
-      e.preventDefault();
-      currentStorage = "starMsgIdList";
-      eTarget.addClass("checked");
-      this.moveMessage(currentStorage, currentMsgId);
-    }
-  }
-
-  moveMessage (storage, msgId) {
-    if(localStorage[storage]) {
-      let currentArray = JSON.parse(localStorage.getItem(storage));
-
-      // currentArray.filter((index, item) => {
-      //   if(item !== msgId) {
-      //     currentArray.push(msgId);
-      //     localStorage[storage] = JSON.stringify(currentArray);
-      //   } else {
-      //     return false;
-      //   }
-      // });
-      currentArray.push(msgId);
-      localStorage[storage] = JSON.stringify(currentArray);
-    }
-    else {
-      localStorage.setItem(storage, JSON.stringify([msgId]));
-    }
-  }
-
+  // Load message lists
   createLocalList () {
     if (!localStorage.inboxList) {
       $.getJSON("data.json", (data) => {
@@ -170,39 +138,128 @@ class App {
 
   openCurrentMsgList (storage) {
     $.each(storage, (index, item) => {
-      this.$msgList.append(`
-        <li class="content_msg-item" data-id="${item.id}">
-          <div class="content_msg-inner">
-            <input type="checkbox" class="content_msg-checkbox">
-            <div class="content_msg-title">${item.title}</div>
-
-            <div class="content_msg-actions">
-              <a href="#" title="open" class="content_msg-link open-link open">open</a>
-              <a href="#" title="delete" class="content_msg-link remove">remove</a>
-              <a href="#" title="like" class="content_msg-link star">like</a>
-            </div>
-          </div>
-          <div class="content_msg-text hidden">${item.text}</div>
-        </li>`);
+        this.msgTemplate(item);
       });
   }
 
-  toggleMobileNavigation (e) {
-    e.preventDefault();
+  msgTemplate (msg) {
+    this.$msgList.append(`
+      <li class="content_msg-item" data-id="${msg.id}">
+        <div class="content_msg-inner">
+          <input type="checkbox" class="content_msg-checkbox">
+          <div class="content_msg-title">${msg.title}</div>
 
-    this.$nav.stop(true, true).slideToggle();
+          <div class="content_msg-actions">
+            <a href="#" title="open" class="content_msg-link open-link open">open</a>
+            <a href="#" title="delete" class="content_msg-link remove">remove</a>
+            <a href="#" title="like" class="content_msg-link star">like</a>
+          </div>
+        </div>
+        <div class="content_msg-text hidden">${msg.text}</div>
+      </li>`);
   }
 
-  showNavigation () {
-    if (window.innerWidth > 480) {
-      this.$nav.removeAttr("style");
+  // Message buttons' actions
+  messageActions (e) {
+    let eTarget = $(e.target);
+
+    if (!eTarget.hasClass("content_msg-checkbox")) {
+      e.preventDefault();
+    }
+    if(eTarget.hasClass("open-link")) {
+      this.openMsgText(eTarget);
+    }
+    if (eTarget.hasClass("remove")) {
+      this.iconTrashAction(eTarget);
+    }
+    if(eTarget.hasClass("star")) {
+      this.starMsg(eTarget);
     }
   }
 
-  selectAllMessages () {
-    $(".content_msg-checkbox").prop("checked", this.$mainCheckbox.is(":checked"));
+  openMsgText (currentOpenIcon) {
+    let currentMsg = currentOpenIcon.closest(".content_msg-item");
+
+    currentOpenIcon.toggleClass("open closed");
+    currentOpenIcon.text(currentOpenIcon.text() === "open" ? "close" : "open");
+    currentOpenIcon.prop("title", currentOpenIcon.prop("title") === "open" ? "close" : "open");
+    currentMsg.find(".content_msg-text").stop(true, true).slideToggle();
   }
 
+  iconTrashAction (currentTrashIcon) {
+    let currentMsgId = currentTrashIcon.closest(".content_msg-item").data("id");
+
+    currentTrashIcon.closest(".content_msg-item").remove();
+
+    if (this.$msgList.hasClass("inbox") || this.$msgList.hasClass("starred")) {
+      this.removeWithIconTrash("inboxList", currentMsgId);
+      this.removeWithIconTrash("starMsgIdList", currentMsgId);
+      this.moveMessage("deleteMsgIdList", currentMsgId);
+    }
+
+    if (this.$msgList.hasClass("draft")) {
+      this.removeWithIconTrash("draftList", currentMsgId);
+    }
+
+    else if (this.$msgList.hasClass("deleted")) {
+      this.removeWithIconTrash("deleteMsgIdList", currentMsgId);
+    }
+  }
+
+  removeWithIconTrash (storage, msgId) {
+    let newArr = JSON.parse(localStorage[storage]).filter((item) => {
+      let condition = storage === "draftList" || storage === "inboxList" ? item.id : item;
+
+      if(msgId === condition) {
+        return false;
+      }
+      return true;
+    });
+
+    if (newArr.length === 0) {
+      localStorage.removeItem(storage);
+    }
+    else {
+      localStorage[storage] = JSON.stringify(newArr);
+    }
+  }
+
+  starMsg (currentStarIcon) {
+    let currentMsgId = currentStarIcon.closest(".content_msg-item").data("id");
+
+    if (!currentStarIcon.hasClass("checked")) {
+      currentStarIcon.addClass("checked");
+      this.moveMessage("starMsgIdList", currentMsgId);
+    }
+    else {}
+  }
+
+  moveMessage (storage, msgId) {
+    if(localStorage[storage]) {
+      let currentArray = JSON.parse(localStorage.getItem(storage));
+
+      // currentArray.filter((index, item) => {
+      //   if(item !== msgId) {
+      //     currentArray.push(msgId);
+      //     localStorage[storage] = JSON.stringify(currentArray);
+      //   } else {
+      //     return false;
+      //   }
+      // });
+      currentArray.push(msgId);
+      localStorage[storage] = JSON.stringify(currentArray);
+    }
+    else {
+      localStorage.setItem(storage, JSON.stringify([msgId]));
+    }
+  }
+
+  // Main checkbox action
+  selectAllMessages () {
+    this.$msgList.find(".content_msg-checkbox").prop("checked", this.$mainCheckbox.is(":checked"));
+  }
+
+  // Remove checked messages
   removeCheckedMsgs (e) {
     e.preventDefault();
 
@@ -222,46 +279,47 @@ class App {
   }
 
   removeMsgs (checkedMsgIdArr) {
-    let newArr;
-
     if (this.$msgList.hasClass("inbox") || this.$msgList.hasClass("starred")) {
-      newArr = JSON.parse(localStorage.inboxList).filter((msg) => {
-        if(checkedMsgIdArr.indexOf(msg.id) > -1) {
-          return false;
-        }
-        return true;
-      });
-
-      localStorage.inboxList = JSON.stringify(newArr);
-
-      if (localStorage.deleteMsgIdList) {
-        localStorage.deleteMsgIdList = JSON.stringify(JSON.parse(localStorage.deleteMsgIdList).concat(checkedMsgIdArr));
-      }
-      else {
-        localStorage.deleteMsgIdList = JSON.stringify(checkedMsgIdArr);
-      }
+      this.filterCheckedMsgs("inboxList", checkedMsgIdArr);
+      this.filterCheckedMsgs("starMsgIdList", checkedMsgIdArr);
+      this.moveToDeleted(checkedMsgIdArr);
     }
     else if (this.$msgList.hasClass("draft")) {
-      newArr = JSON.parse(localStorage.draftList).filter((msg) => {
-        if(checkedMsgIdArr.indexOf(msg.id) > -1) {
-          return false;
-        }
-        return true;
-      });
-      localStorage.draftList = JSON.stringify(newArr);
+      this.filterCheckedMsgs("draftList", checkedMsgIdArr);
     }
     else {
-      newArr = JSON.parse(localStorage.deleteMsgIdList).filter((id) => {
-        if(checkedMsgIdArr.indexOf(id) > -1) {
-          return false;
-        }
-        return true;
-      });
-      localStorage.deleteMsgIdList = JSON.stringify(newArr);
+      this.filterCheckedMsgs("deleteMsgIdList", checkedMsgIdArr);
     }
-    newArr = [];
   }
 
+  moveToDeleted (checkedMsgIdArr) {
+    if (localStorage.deleteMsgIdList) {
+      localStorage.deleteMsgIdList = JSON.stringify(JSON.parse(localStorage.deleteMsgIdList).concat(checkedMsgIdArr));
+    }
+    else {
+      localStorage.setItem("deleteMsgIdList", JSON.stringify(checkedMsgIdArr));
+    }
+  }
+
+  filterCheckedMsgs (storage, checkedMsgsArr) {
+    let newArr = JSON.parse(localStorage[storage]).filter((item) => {
+      let condition = storage === "inboxList" || storage === "draftList" ? item.id : item;
+
+      if(checkedMsgsArr.indexOf(condition) > -1) {
+        return false;
+      }
+      return true;
+    });
+
+    if (newArr.length === 0) {
+      localStorage.removeItem(storage);
+    }
+    else {
+      localStorage[storage] = JSON.stringify(newArr);
+    }
+  }
+
+  // "New message" form actions
   slideToggleMsgForm (e) {
     e.preventDefault();
 
@@ -275,42 +333,46 @@ class App {
     e.preventDefault();
 
     let draftMsgArr = [];
-    let draftMsgItem = {};
+    let newDraftMsg = {};
     let counter;
 
-    draftMsgItem.title = this.$newMsgInput.val();
-    draftMsgItem.text = this.$newMsgTextarea.val();
+    newDraftMsg.title = this.$newMsgInput.val();
+    newDraftMsg.text = this.$newMsgTextarea.val();
 
     if (localStorage.draftList) {
       counter = JSON.parse(localStorage.draftList)[0].id + 1;
-      draftMsgItem.id = counter++;
+      newDraftMsg.id = counter++;
 
       draftMsgArr = JSON.parse(localStorage.draftList);
-      draftMsgArr.push(draftMsgItem);
-
+      draftMsgArr.push(newDraftMsg);
       localStorage.draftList = JSON.stringify(draftMsgArr);
     }
     else {
-      draftMsgItem.id = JSON.parse(localStorage.allMessagesList).length + 1;
-      draftMsgArr.push(draftMsgItem);
+      newDraftMsg.id = JSON.parse(localStorage.allMessagesList).length + 1;
+      draftMsgArr.push(newDraftMsg);
       localStorage.setItem("draftList", JSON.stringify(draftMsgArr));
     }
-    draftMsgArr = [];
-    draftMsgItem = {};
+    this.msgTemplate(newDraftMsg);
+    this.toggleInfoMessage();
     this.clearForm();
+    this.showSaveMsg();
+    draftMsgArr = [];
+    newDraftMsg = {};
   }
 
   clearForm () {
     this.$newMsgFields.val("");
   }
 
+  showSaveMsg () {
+    this.$newMsgInfo.addClass("active")
+    setTimeout(() => this.$newMsgInfo.removeClass("active"), 3000);
+  }
+
   checkFields () {
     $.each(this.$newMsgFields, (index, field) => {
       if (!$(field).val()) {
         $(field).focus().addClass("error-field");
-      }
-      else {
-        $(field).attr("data-value", $(field).val());
       }
     });
   }

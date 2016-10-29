@@ -72,3 +72,12 @@
     }
   }
 }
+
+.draft,
+.deleted {
+  .content_msg-link {
+    &.star {
+      display: none;
+    }
+  }
+}

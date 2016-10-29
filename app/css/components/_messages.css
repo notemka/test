@@ -40,6 +40,10 @@
   background-repeat: no-repeat;
   background-position: center center;
 
+  &:last-child {
+    margin-right: 0;
+  }
+
   &.open {
     background-image: svg-load("chevron-down.svg");
     background-size: 80%;
