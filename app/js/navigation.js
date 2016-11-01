@@ -1,6 +1,6 @@
 import MessagesList  from "./messages_list";
 
-class Navigation {
+export default class Navigation {
   constructor(ui) {
     this.$wrapper = ui;
     this.$nav = ui.find(".nav");
@@ -54,5 +54,3 @@ class Navigation {
     }
   }
 }
-
-export default Navigation;

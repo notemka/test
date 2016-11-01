@@ -1,15 +1,17 @@
 import Navigation from "./navigation";
-import Messages from "./messages";
 import MessagesList from "./messages_list";
-import DeleteButton from "./delete_button";
+import Messages from "./messages";
 import NewMessageForm from "./new_message_form";
+import StarButton from "./star_button";
+import DeleteButton from "./delete_button";
 
 (() => {
   let wrapper = $(".wrapper");
 
   new Navigation(wrapper);
-  new Messages(wrapper);
   new MessagesList(wrapper);
-  new DeleteButton(wrapper);
+  new Messages(wrapper);
   new NewMessageForm(wrapper);
+  new StarButton(wrapper);
+  new DeleteButton(wrapper);
 })();

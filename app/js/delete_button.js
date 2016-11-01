@@ -1,4 +1,4 @@
-class DeleteButton {
+export default class DeleteButton {
   constructor(ui) {
     this.$msgList = ui.find(".content_msg-list");
     this.$deleteMsgButton = ui.find("#button_delete");
@@ -69,5 +69,3 @@ class DeleteButton {
     }
   }
 }
-
-export default DeleteButton;

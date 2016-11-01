@@ -61,9 +61,13 @@
 }
 
 .new-msg_text {
-  height: 100px;
+  height: 150px;
   padding: 10px;
   resize: none;
+
+  @media (max-width: $xsmall) {
+    height: 100px;
+  }
 }
 
 .new-msg_info {

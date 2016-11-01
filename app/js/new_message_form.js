@@ -1,6 +1,6 @@
 import MessagesList from "./messages_list";
 
-class NewMessageForm {
+export default class NewMessageForm {
   constructor(ui) {
     this.$wrapper = ui;
     this.$msgList = ui.find(".content_msg-list");
@@ -91,5 +91,3 @@ class NewMessageForm {
     }
   }
 }
-
-export default NewMessageForm;

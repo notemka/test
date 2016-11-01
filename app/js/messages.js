@@ -1,4 +1,4 @@
-class Messages {
+export default class Messages {
   constructor(ui) {
     this.$msgList = ui.find(".content_msg-list");
     this.$mainCheckbox = ui.find("#main_checkbox");
@@ -31,9 +31,9 @@ class Messages {
   openMsgText (currentOpenIcon) {
     let currentMsg = currentOpenIcon.closest(".content_msg-item");
 
-    currentOpenIcon.toggleClass("open closed");
-    currentOpenIcon.text(currentOpenIcon.text() === "open" ? "close" : "open");
-    currentOpenIcon.prop("title", currentOpenIcon.prop("title") === "open" ? "close" : "open");
+    currentOpenIcon.toggleClass("open closed")
+                    .text(currentOpenIcon.text() === "open" ? "close" : "open")
+                    .prop("title", currentOpenIcon.prop("title") === "open" ? "close" : "open");
     currentMsg.find(".content_msg-text").stop(true, true).slideToggle();
   }
 
@@ -76,27 +76,35 @@ class Messages {
   }
 
   starMsg (currentStarIcon) {
-    let currentMsgId = currentStarIcon.closest(".content_msg-item").data("id");
+    let currentMsg = currentStarIcon.closest(".content_msg-item");
+    let currentMsgId = currentMsg.data("id");
+    let starArr = JSON.parse(localStorage.starMsgIdList);
 
     if (!currentStarIcon.hasClass("checked")) {
       currentStarIcon.addClass("checked");
       this.moveMessage("starMsgIdList", currentMsgId);
     }
-    else {}
+    else {
+      let newStarArr = starArr.filter((id) => {
+        if (id === currentMsgId) {
+          return false;
+        }
+        return true;
+      });
+
+      currentMsg.find("a.star").removeClass("checked");
+      localStorage.starMsgIdList = JSON.stringify(newStarArr);
+
+      if (this.$msgList.hasClass("starred")) {
+        currentMsg.remove();
+      }
+    }
   }
 
   moveMessage (storage, msgId) {
     if(localStorage[storage]) {
       let currentArray = JSON.parse(localStorage.getItem(storage));
 
-      // currentArray.filter((index, item) => {
-      //   if(item !== msgId) {
-      //     currentArray.push(msgId);
-      //     localStorage[storage] = JSON.stringify(currentArray);
-      //   } else {
-      //     return false;
-      //   }
-      // });
       currentArray.push(msgId);
       localStorage[storage] = JSON.stringify(currentArray);
     }
@@ -109,5 +117,3 @@ class Messages {
     this.$msgList.find(".content_msg-checkbox").prop("checked", this.$mainCheckbox.is(":checked"));
   }
 }
-
-export default Messages;

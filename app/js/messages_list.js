@@ -1,4 +1,4 @@
-class MessagesList {
+export default class MessagesList {
   constructor(ui) {
     this.$msgList = ui.find(".content_msg-list");
     this.$listInfoMsg = ui.find(".content_info-msg");
@@ -30,6 +30,7 @@ class MessagesList {
 
     if (this.$msgList.hasClass("starred")) {
       this.loadMsgList(starMsgIdList);
+      this.$msgList.find(".content_msg-link.star").addClass("checked");
     }
 
     if (this.$msgList.hasClass("draft") && localStorage.draftList) {
@@ -65,19 +66,23 @@ class MessagesList {
     }
   }
 
-  toggleInfoMessage () {
-    if (this.$msgList.html() === "") {
-      this.$listInfoMsg.removeClass("hidden");
-    }
-    else {
-      this.$listInfoMsg.addClass("hidden");
-    }
-  }
-
-  renderMsgList (storage) {
-    $.each(storage, (index, item) => {
-        this.msgTemplate(item);
+  renderMsgList (storageArr) {
+    storageArr.forEach((item) => {
+      this.msgTemplate(item);
     });
+
+    if (this.$msgList.hasClass("inbox") && localStorage.starMsgIdList) {
+      let starArr = JSON.parse(localStorage.starMsgIdList);
+      let inboxMsgs = this.$msgList.find(".content_msg-item");
+
+      $.each(inboxMsgs, (index, msg) => {
+        for(let i of starArr) {
+          if (i === $(msg).data("id")) {
+            $(msg).find("a.star").addClass("checked");
+          }
+        }
+      });
+    }
   }
 
   msgTemplate (msg) {
@@ -96,6 +101,13 @@ class MessagesList {
         <div class="content_msg-text hidden">${msg.text}</div>
       </li>`);
   }
-}
 
-export default MessagesList;
+  toggleInfoMessage () {
+    if (this.$msgList.html() === "") {
+      this.$listInfoMsg.removeClass("hidden");
+    }
+    else {
+      this.$listInfoMsg.addClass("hidden");
+    }
+  }
+}
