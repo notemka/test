@@ -21,7 +21,7 @@
   &.disable {
     pointer-events: none;
     cursor: default;
-    opacity: .4;
+    opacity: 0.4;
   }
 
   &-last-child {

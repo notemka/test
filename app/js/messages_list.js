@@ -37,15 +37,20 @@ export default class MessagesList {
       this.checkActiveTab("starred");
     }
 
-    if (this.$msgList.hasClass("draft") && localStorage.draftList) {
-      this.renderMsgList(JSON.parse(localStorage.draftList));
+    if (this.$msgList.hasClass("draft")) {
+      if (localStorage.draftList) {
+        this.renderMsgList(JSON.parse(localStorage.draftList));
+      }
       this.checkActiveTab("draft");
     }
 
     if (this.$msgList.hasClass("inbox")) {
-      this.renderMsgList(JSON.parse(localStorage.inboxList));
+      if (localStorage.inboxList) {
+        this.renderMsgList(JSON.parse(localStorage.inboxList));
+      }
       this.checkActiveTab("inbox");
     }
+
     this.toggleInfoMessage();
   }
 
@@ -81,18 +86,7 @@ export default class MessagesList {
       this.msgTemplate(item);
     });
 
-    if (this.$msgList.hasClass("inbox") || this.$msgList.hasClass("starred") && localStorage.starMsgIdList) {
-      let starArr = JSON.parse(localStorage.starMsgIdList);
-      let inboxMsgs = this.$msgList.find(".content_msg-item");
-
-      $.each(inboxMsgs, (index, msg) => {
-        for(let i of starArr) {
-          if (i === $(msg).data("id")) {
-            $(msg).find("a.star").addClass("checked");
-          }
-        }
-      });
-    }
+    this.fillStarIcon();
   }
 
   msgTemplate (msg) {
@@ -110,6 +104,21 @@ export default class MessagesList {
         </div>
         <div class="content_msg-text hidden">${msg.text}</div>
       </li>`);
+  }
+
+  fillStarIcon () {
+    if ((this.$msgList.hasClass("inbox") || this.$msgList.hasClass("starred")) && localStorage.starMsgIdList) {
+      let starArr = JSON.parse(localStorage.starMsgIdList);
+      let inboxMsgs = this.$msgList.find(".content_msg-item");
+
+      $.each(inboxMsgs, (index, msg) => {
+        for(let i of starArr) {
+          if (i === $(msg).data("id")) {
+            $(msg).find("a.star").addClass("checked");
+          }
+        }
+      });
+    }
   }
 
   toggleInfoMessage () {

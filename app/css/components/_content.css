@@ -40,8 +40,6 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
-  padding-bottom: 10px;
-  box-shadow: 0 15px 20px -8px $border;
 
   @media (max-width: $small) {
     flex-direction: column-reverse;

@@ -1,34 +1,35 @@
 "use strict"; //показывать место ошибки в терминале
 
 //создание переменных для вызова
-var browserify = require('browserify');
 var gulp = require("gulp");
-var source = require('vinyl-source-stream');
+
+var browserify = require("browserify");
+var source = require("vinyl-source-stream");
 var buffer = require("vinyl-buffer");
-var cssnano = require("cssnano");
 
 var babelify = require("babelify");
 
 var postcss = require("gulp-postcss");
-var vars = require("postcss-simple-vars");
 var autoprefixer = require("autoprefixer");
-var cssnext = require("cssnext");             // включает синтаксис будущего
+var cssnano = require("cssnano");
+var vars = require("postcss-simple-vars");
+var cssnext = require("cssnext");           // включает синтаксис будущего
 var nested = require("postcss-nested");
 var colorFunctions = require("postcss-colour-functions");
 var stripInlineComment = require("postcss-strip-inline-comments");
 var importCss = require("postcss-partial-import");
+var importCssUrl = require("postcss-import-url");
 var inlineSvg = require("postcss-inline-svg");
 var stylelint = require("stylelint");
-var config = require("./stylelint.config.js");
 
 var jade = require("gulp-jade");
-var uglify = require("gulp-uglify");    //минифицирует js
-var clean = require("gulp-clean");      //для очистки папки dest перед пересборкой
 var prettify = require("gulp-prettify");
-var filter = require("gulp-filter");    //для фильтрования шрифтов
-var size = require("gulp-size");            //показывает размер сборки
-var imagemin = require("gulp-imagemin");   //минификация изображений
-var browserSync = require("browser-sync");  //для обновления страницы при разработке
+
+var filter = require("gulp-filter");       // для фильтрования шрифтов
+var clean = require("gulp-clean");         // для очистки папки dest перед пересборкой
+var size = require("gulp-size");           // показывает размер сборки
+var imagemin = require("gulp-imagemin");   // минификация изображений
+var browserSync = require("browser-sync"); // для обновления страницы при разработке
 var reload = browserSync.reload;
 
 // очистка папки
@@ -73,8 +74,9 @@ gulp.task("jade", function() {
 // компиляция css
 gulp.task("css", function() {
   var processors = [
-    stylelint(config),
+    stylelint(),
     importCss,
+    importCssUrl,
     nested,
     vars({ silent: true }),
     cssnext,
@@ -101,9 +103,8 @@ gulp.task("js", function() {
     .bundle()
     .pipe(source("bundle.js"))
     .pipe(buffer())
-    // .pipe(uglify())
     .on("error", log)
-    .pipe(gulp.dest("./dest/js", uglify()))
+    .pipe(gulp.dest("./dest/js"))
     .pipe(reload({stream: true}));
 });
 

@@ -1,6 +1,6 @@
 .content_msg-list {
-  max-height: 68vh;
   overflow-y: auto;
+  max-height: 68vh;
 }
 
 .content_msg-item {
