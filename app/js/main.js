@@ -4,6 +4,7 @@ import Messages from "./messages";
 import NewMessageForm from "./new_message_form";
 import StarButton from "./star_button";
 import DeleteButton from "./delete_button";
+import AppHistory from "./history";
 
 (() => {
   let wrapper = $(".wrapper");
@@ -14,4 +15,5 @@ import DeleteButton from "./delete_button";
   new NewMessageForm(wrapper);
   new StarButton(wrapper);
   new DeleteButton(wrapper);
+  new AppHistory(wrapper);
 })();

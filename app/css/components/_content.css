@@ -2,7 +2,7 @@
   width: 85%;
   margin: auto;
 
-  @media only screen and (max-width: $medium) {
+  @media (max-width: $medium) {
     width: 90%;
   }
 }
@@ -15,7 +15,7 @@
   box-sizing: border-box;
   vertical-align: top;
 
-  @media only screen and (max-width: $medium) {
+  @media (max-width: $medium) {
     padding: 20px 10px;
   }
 }
@@ -30,7 +30,7 @@
   display: inline-block;
   border-radius: 3px;
 
-  @media only screen and (max-width: $xsmall) {
+  @media (max-width: $xsmall) {
     display: block;
     margin-bottom: 10px;
   }
@@ -40,8 +40,10 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+  padding-bottom: 10px;
+  box-shadow: 0 15px 20px -8px $border;
 
-  @media only screen and (max-width: $small) {
+  @media (max-width: $small) {
     flex-direction: column-reverse;
     justify-content: flex-start;
   }
@@ -50,15 +52,14 @@
 .content_actions-checkbox {
   display: inline-block;
   margin: 5px 0;
-  font-size: 20px;
   vertical-align: middle;
 
-  @media only screen and (max-width: $medium) {
+  @media (max-width: $medium) {
     margin: 8px 15px 8px 0;
   }
 
-  @media only screen and (max-width: $small) {
-    margin-right: 5px;
+  @media (max-width: $small) {
+    margin: 2px 10px 0 0;
   }
 }
 
@@ -66,7 +67,7 @@
   span {
     display: none;
 
-    @media only screen and (max-width: $small) {
+    @media (max-width: $small) {
       display: inline-block;
       vertical-align: middle;
     }

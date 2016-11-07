@@ -17,29 +17,16 @@ export default class Navigation {
   }
 
   selectActiveNavLink (e) {
+    let listName = $(e.target).data("list");
+
     e.preventDefault();
-
-    let currentLink = $(e.target);
-    let url = currentLink.attr("href");
-
-    currentLink.addClass("active").siblings().removeClass("active");
-    this.clearMsgList();
 
     if (window.innerWidth <= 480) {
       this.toggleMobileNavigation(e);
     }
 
-    if (url !== "/") {
-      this.$msgList.toggleClass(`${this.$msgList.attr("class")} content_msg-list ${url.slice(1)}`);
-    }
-    else {
-      this.$msgList.toggleClass(`${this.$msgList.attr("class")} content_msg-list inbox`);
-    }
+    this.$msgList.toggleClass(`${this.$msgList.attr("class")} content_msg-list ${listName}`);
     new MessagesList(this.$wrapper).showActiveMsgList();
-  }
-
-  clearMsgList () {
-    this.$msgList.html("");
   }
 
   toggleMobileNavigation (e) {

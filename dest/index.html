@@ -20,13 +20,13 @@
     <div class="wrapper">
       <header class="header">
         <a href="/" class="header-logo"><img src="img/paperplane.svg" class="header-logo-img"><i class="header-logo-text">Paperplane</i></a><a href="#" class="header-nav-trigger">Menu</a>
-        <nav class="nav"><a href="/" title="Inbox" class="nav-link active">Inbox</a><a href="/draft" title="Draft" class="nav-link">Draft</a><a href="/starred" title="Starred" class="nav-link">Starred</a><a href="/deleted" title="Deleted" class="nav-link">Deleted</a></nav>
+        <nav class="nav"><a href="/inbox" data-list="inbox" class="nav-link active">Inbox</a><a href="/draft" data-list="draft" class="nav-link">Draft</a><a href="/starred" data-list="starred" class="nav-link">Starred</a><a href="/deleted" data-list="deleted" class="nav-link">Deleted</a></nav>
       </header>
       <div class="content">
         <div class="content_actions"><label for="main_checkbox" class="content_actions-label label"><input id="main_checkbox" type="checkbox" value="Select all" title="Select all" class="content_actions-checkbox"><span>select all</span></label>
           <div class="content_actions-buttons"><a id="button_new" href="#" class="content_actions-button button">New</a><a id="button_star" href="#" class="content_actions-button button">Star</a><a id="button_delete" href="#" class="content_actions-button button">Delete</a></div>
         </div>
-        <div class="content-inner">
+        <div class="content_inner">
           <div class="content_info-msg hidden">List is empty</div>
           <ul class="content_msg-list inbox"></ul>
         </div>

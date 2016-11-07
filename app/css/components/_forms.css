@@ -28,7 +28,7 @@
     margin-right: 0;
   }
 
-  @media only screen and (max-width: $small) {
+  @media (max-width: $small) {
     width: 100%;
     padding: 5px 0;
     border-bottom-color: $lightFont;

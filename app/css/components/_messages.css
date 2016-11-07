@@ -1,3 +1,8 @@
+.content_msg-list {
+  max-height: 68vh;
+  overflow-y: auto;
+}
+
 .content_msg-item {
   margin-bottom: 5px;
   border-bottom: 1px solid $border;
@@ -16,7 +21,11 @@
 
 .content_msg-checkbox {
   margin: 0;
-  margin-right: 17px;
+  margin-right: 10px;
+
+  @media (max-width: $small) {
+    margin-right: 5px;
+  }
 }
 
 .content_msg-title {

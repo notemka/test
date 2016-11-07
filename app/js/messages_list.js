@@ -1,5 +1,6 @@
 export default class MessagesList {
   constructor(ui) {
+    this.$nav = ui.find(".nav");
     this.$msgList = ui.find(".content_msg-list");
     this.$listInfoMsg = ui.find(".content_info-msg");
 
@@ -21,26 +22,35 @@ export default class MessagesList {
   }
 
   showActiveMsgList () {
-    let deleteMsgIdList = "deleteMsgIdList";
-    let starMsgIdList = "starMsgIdList";
+    let deletedStorage = "deleteMsgIdList";
+    let starredStorage = "starMsgIdList";
+
+    this.$msgList.html("");
 
     if (this.$msgList.hasClass("deleted")) {
-      this.loadMsgList(deleteMsgIdList);
+      this.loadMsgList(deletedStorage);
+      this.checkActiveTab("deleted");
     }
 
     if (this.$msgList.hasClass("starred")) {
-      this.loadMsgList(starMsgIdList);
-      this.$msgList.find(".content_msg-link.star").addClass("checked");
+      this.loadMsgList(starredStorage);
+      this.checkActiveTab("starred");
     }
 
     if (this.$msgList.hasClass("draft") && localStorage.draftList) {
       this.renderMsgList(JSON.parse(localStorage.draftList));
+      this.checkActiveTab("draft");
     }
 
     if (this.$msgList.hasClass("inbox")) {
       this.renderMsgList(JSON.parse(localStorage.inboxList));
+      this.checkActiveTab("inbox");
     }
     this.toggleInfoMessage();
+  }
+
+  checkActiveTab(listName) {
+    this.$nav.find(`[data-list=${listName}]`).addClass("active").siblings().removeClass("active");
   }
 
   loadMsgList (checkedMsgIdList) {
@@ -71,7 +81,7 @@ export default class MessagesList {
       this.msgTemplate(item);
     });
 
-    if (this.$msgList.hasClass("inbox") && localStorage.starMsgIdList) {
+    if (this.$msgList.hasClass("inbox") || this.$msgList.hasClass("starred") && localStorage.starMsgIdList) {
       let starArr = JSON.parse(localStorage.starMsgIdList);
       let inboxMsgs = this.$msgList.find(".content_msg-item");
 

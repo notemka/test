@@ -78,13 +78,17 @@ export default class Messages {
   starMsg (currentStarIcon) {
     let currentMsg = currentStarIcon.closest(".content_msg-item");
     let currentMsgId = currentMsg.data("id");
-    let starArr = JSON.parse(localStorage.starMsgIdList);
 
-    if (!currentStarIcon.hasClass("checked")) {
-      currentStarIcon.addClass("checked");
-      this.moveMessage("starMsgIdList", currentMsgId);
-    }
-    else {
+    if (currentStarIcon.hasClass("checked")) {
+      let starArr = JSON.parse(localStorage.starMsgIdList);
+
+      if (this.$msgList.hasClass("starred")) {
+        currentMsg.remove();
+      }
+      else {
+        currentStarIcon.removeClass("checked");
+      }
+
       let newStarArr = starArr.filter((id) => {
         if (id === currentMsgId) {
           return false;
@@ -92,12 +96,11 @@ export default class Messages {
         return true;
       });
 
-      currentMsg.find("a.star").removeClass("checked");
       localStorage.starMsgIdList = JSON.stringify(newStarArr);
-
-      if (this.$msgList.hasClass("starred")) {
-        currentMsg.remove();
-      }
+    }
+    else {
+      currentStarIcon.addClass("checked");
+      this.moveMessage("starMsgIdList", currentMsgId);
     }
   }
 

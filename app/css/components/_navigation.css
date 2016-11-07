@@ -2,7 +2,7 @@
   width: 85%;
   text-align: right;
 
-  @media only screen and (max-width: $xsmall) {
+  @media (max-width: $xsmall) {
     position: absolute;
     top: 80px;
     left: 0;
@@ -34,16 +34,16 @@
     background: $contentColor;
     border-top: 5px solid;
 
-    @media only screen and (max-width: $xsmall) {
+    @media (max-width: $xsmall) {
       border: 0;
     }
   }
 
-  @media only screen and (max-width: $medium) {
+  @media (max-width: $medium) {
     padding: 10px;
   }
 
-  @media only screen and (max-width: $xsmall) {
+  @media (max-width: $xsmall) {
     display: block;
     border: 0;
   }

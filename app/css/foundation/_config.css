@@ -22,7 +22,7 @@ $font: "Open Sans", sans-serif;
 $fontSize: 14px;
 $fontColor: #445361;
 $secondaryfontColor: #777;
-$lightFont: $bgColor;
+$lightFont: #fff;
 
 /* ----- Borders & Box Shadow ----- */
 $border: #e7debc;
