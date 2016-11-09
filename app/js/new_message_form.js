@@ -18,8 +18,9 @@ export default class NewMessageForm {
   initEvents () {
     this.$newMsgButton.on("click", this.slideToggleMsgForm.bind(this));
     this.$newMsgCloseLink.on("click", this.slideToggleMsgForm.bind(this));
-    this.$newMsgForm.on("submit", this.saveNewMsg.bind(this));
+    this.$newMsgFields.on("invalid", this.checkFields.bind(this));
     this.$newMsgFields.on("input", this.removeErrorClass.bind(this));
+    this.$newMsgForm.on("submit", this.saveNewMsg.bind(this));
   }
 
   slideToggleMsgForm (e) {
@@ -29,6 +30,17 @@ export default class NewMessageForm {
 
     this.$newMsgForm.slideToggle();
     this.$newMsgFields.removeClass("error-field");
+  }
+
+  checkFields (e) {
+    $(e.target).addClass("error-field");
+  }
+
+  removeErrorClass (e) {
+    let currentField = $(e.target)
+    if (currentField.hasClass("error-field")) {
+      currentField.removeClass("error-field");
+    }
   }
 
   saveNewMsg (e) {
@@ -74,20 +86,5 @@ export default class NewMessageForm {
   showSaveMsg () {
     this.$newMsgInfo.addClass("active");
     setTimeout(() => this.$newMsgInfo.removeClass("active"), 3000);
-  }
-
-  checkFields () {
-    $.each(this.$newMsgFields, (index, field) => {
-      if (!$(field).val()) {
-        $(field).focus().addClass("error-field");
-      }
-    });
-  }
-
-  removeErrorClass (e) {
-    let currentField = $(e.target)
-    if (currentField.hasClass("error-field")) {
-      currentField.removeClass("error-field");
-    }
   }
 }

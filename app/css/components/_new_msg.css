@@ -47,12 +47,15 @@
     border-color: $border;
   }
 
-  &::-webkit-input-placeholder {
+  &::placeholder {
     color: darken($contentColor, 30%);
+    opacity: 0.4;
+    font-weight: 200;
   }
 
   &.error-field {
     border-color: $trashColor;
+    box-shadow: 0 0 10px -2px $trashColor;
   }
 }
 

@@ -3,8 +3,8 @@ form.new-msg_form.hidden
     h3.new-msg_head-title New message
     a.new-msg_link(href="#") Close
   .new-msg_fields
-    input.new-msg_field.new-msg_title#new_msg_title(placeholder="title")
-    textarea.new-msg_field.new-msg_text#new_msg_text(placeholder="type your message")
+    input.new-msg_field.new-msg_title#new_msg_title(placeholder="Title", required)
+    textarea.new-msg_field.new-msg_text#new_msg_text(placeholder="Type your message", required)
   .new-msg_actions
     input.new-msg_button.button(type="submit", value="Save")
     span.new-msg_info Stored in the draft
