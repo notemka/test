@@ -20,6 +20,32 @@
   }
 }
 
+.content_inner {
+  position: relative;
+
+  &::before,
+  &::after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    content: "";
+
+    height: 5px;
+  }
+
+  &::before {
+    top: -12px;
+
+    box-shadow: 0 10px 20px 3px $contentColor;
+  }
+
+  &::after {
+    bottom: -10px;
+
+    box-shadow: 0 -10px 20px 3px $contentColor;
+  }
+}
+
 .content_info-msg {
   text-align: center;
   color: $secondaryfontColor;

@@ -1,6 +1,27 @@
 .content_msg-list {
   overflow-y: auto;
   max-height: 68vh;
+  padding-top: 5px;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 8px;
+    background: $border;
+    background-clip: content-box;
+    border-left: 6px solid transparent;
+    border-right: 2px solid transparent;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
 }
 
 .content_msg-item {

@@ -24,14 +24,15 @@
     opacity: 0.4;
   }
 
-  &-last-child {
-    margin-right: 0;
+  &:last-child {
+    margin: 0;
   }
 
   @media (max-width: $small) {
     width: 100%;
+    margin: 0;
+    margin-bottom: 2px;
     padding: 5px 0;
-    border-bottom-color: $lightFont;
     border-radius: 0;
   }
 }
