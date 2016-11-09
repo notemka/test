@@ -53,7 +53,7 @@ export default class DeleteButton {
 
   filterCheckedMsgs (storage, checkedMsgsArr) {
     let newArr = JSON.parse(localStorage[storage]).filter((item) => {
-      let condition = this.$msgList.hasClass("draft") || this.$msgList.hasClass("inbox") ? item.id : item;
+      let condition = checkedMsgsArr === "draftList" || checkedMsgsArr === "inboxList" ? item.id : item;
 
       if(checkedMsgsArr.indexOf(condition) > -1) {
         return false;

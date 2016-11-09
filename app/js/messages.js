@@ -59,7 +59,7 @@ export default class Messages {
 
   removeWithIconTrash (storage, msgId) {
     let newArr = JSON.parse(localStorage[storage]).filter((item) => {
-      let condition = this.$msgList.hasClass("draft") || this.$msgList.hasClass("inbox") ? item.id : item;
+      let condition = storage === "draftList" || storage === "inboxList" ? item.id : item;
 
       if(msgId === condition) {
         return false;
